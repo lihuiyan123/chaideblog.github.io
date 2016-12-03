@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="author" content="CHAI" />
+		<title>
+			
+				
+				MarkDown使用LaTeX指南
+			
+		</title>
+
+		<link rel="shortcut icon" href="/image/favicon.ico" />
+		<link href="/feed/" rel="alternate" title="CHAI" type="application/atom+xml" />
+		<link rel="stylesheet" href="/media/css/style.css" />
+		<link rel="stylesheet" href="/media/css/highlight.css" />
+		<script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+	</head>
+
+	<body>
+		<div id="container">
+		<div id="main" role="main">
+
+		<header>
+			<h1>
+				MarkDown使用LaTeX指南
+			</h1>
+		</header>
+
+		<nav>
+			<span><a title="网站首页" class="" href="/">首页</a></span>
+			<span><a title="文章分类" class="" href="/categories/">分类</a></span>
+			<span><a title="标签索引" class="" href="/tags/">标签</a></span>
+			<span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+			<span><a title="关于站长" class="" href="/about/">关于</a></span>
+        </nav>
+
+        <article class="content">
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+			<section class="meta">
+<span class="time">
+    <time datetime="2016-11-30">2016-11-30</time>
+</span>
+
+ |
+<span class="categories">
+  分类
+  
+  <a href="/categories/#MarkDown" title="MarkDown">MarkDown</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  标签
+  
+  <a href="/tags/#LaTeX" title="LaTeX">LaTeX</a>&nbsp;
+  
+  <a href="/tags/#MarkDown" title="MarkDown">MarkDown</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h3 id="测试时间和环境">测试时间和环境</h3>
+<p><strong>2016/11/30-Ubuntu 14.04-Atom</strong></p>
+<h3 id="插入latex公式的方法">插入LaTeX公式的方法</h3>
+<h4 id="使用google-chart的服务器">使用Google Chart的服务器</h4>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://chart.googleapis.com/chart?cht=tx&amp;chl=在此插入Latex公式&quot;</span> <span class="na">style=</span><span class="s">&quot;border:none;&quot;</span><span class="nt">&gt;</span></code></pre></figure>
+
+<p>举一个例子：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://chart.googleapis.com/chart?cht=tx&amp;chl=\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}&quot;</span> <span class="na">style=</span><span class="s">&quot;border:none;&quot;</span><span class="nt">&gt;</span></code></pre></figure>
+
+<p>实际效果：
+<img src="http://chart.googleapis.com/chart?cht=tx&amp;chl=\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" style="border:none;" /></p>
+
+<h4 id="使用forkosh服务器">使用forkosh服务器</h4>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://www.forkosh.com/mathtex.cgi?在此处插入Latex公式&quot;</span><span class="nt">&gt;</span></code></pre></figure>
+
+<p>举一个例子：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://latex.codecogs.com/png.latex?\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}&quot;</span><span class="nt">&gt;</span></code></pre></figure>
+
+<p>实际效果：
+<img src="http://latex.codecogs.com/png.latex?\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" /></p>
+
+<h4 id="google的latex服务调用接口">Google的Latex服务调用接口</h4>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://latex.codecogs.com/png.latex?LaTex公式代码&quot;</span> <span class="nt">&gt;</span></code></pre></figure>
+
+<p>举一个例子：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://latex.codecogs.com/png.latex?\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}&quot;</span><span class="nt">&gt;</span></code></pre></figure>
+
+<p>实际效果：
+<img src="http://latex.codecogs.com/png.latex?\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" /></p>
+
+<h4 id="使用mathjax引擎">使用MathJax引擎</h4>
+<ol>
+  <li>在Markdown中添加MathJax引擎</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
+
+<ol>
+  <li>输入公式
+    <pre><code class="language-latex">$$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$
+</code></pre>
+    <p>实际效果：
+<script type="math/tex">x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}</script></p>
+  </li>
+</ol>
+
+<p>如果是在文本中插入公式，则用<code>$...$</code>；如果公式自成段落，则使用<code>$$...$$</code>。</p>
+
+<h3 id="参考文献">参考文献</h3>
+<ol>
+  <li><a href="http://www.kuqin.com/shuoit/20150610/346533.html">在Markdown中使用数学公式</a></li>
+  <li><a href="http://blog.csdn.net/u010945683/article/details/46757757">MathJax基本的使用方式</a></li>
+  <li><a href="http://blog.csdn.net/xiahouzuoxin/article/details/26478179">Markdown中插入数学公式的方法</a></li>
+  <li><a href="https://www.mathjax.org/">MathJax官网</a></li>
+  <li><a href="http://www.ituring.com.cn/article/32403">怎样在 Markdown 中使用数学公式</a></li>
+</ol>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/Python-Learn-chapter9/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+        </article>
+		</div>
+		</div>
+	</body>
+</html>

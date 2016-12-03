@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="author" content="CHAI" />
+		<title>
+			
+				
+				瑞利分布
+			
+		</title>
+
+		<link rel="shortcut icon" href="/image/favicon.ico" />
+		<link href="/feed/" rel="alternate" title="CHAI" type="application/atom+xml" />
+		<link rel="stylesheet" href="/media/css/style.css" />
+		<link rel="stylesheet" href="/media/css/highlight.css" />
+		<script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+	</head>
+
+	<body>
+		<div id="container">
+		<div id="main" role="main">
+
+		<header>
+			<h1>
+				瑞利分布
+			</h1>
+		</header>
+
+		<nav>
+			<span><a title="网站首页" class="" href="/">首页</a></span>
+			<span><a title="文章分类" class="" href="/categories/">分类</a></span>
+			<span><a title="标签索引" class="" href="/tags/">标签</a></span>
+			<span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+			<span><a title="关于站长" class="" href="/about/">关于</a></span>
+        </nav>
+
+        <article class="content">
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+			<section class="meta">
+<span class="time">
+    <time datetime="2015-12-01">2015-12-01</time>
+</span>
+
+ |
+<span class="categories">
+  分类
+  
+  <a href="/categories/#概率论" title="概率论">概率论</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  标签
+  
+  <a href="/tags/#概率分布" title="概率分布">概率分布</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>瑞利分布（Rayleigh Distribution）:当一个随机二维向量的两个分量呈独立的、有着相同的方差的正态分布时，这个向量的模呈瑞利分布。</p>
+
+<p>推导过程：</p>
+
+<script type="math/tex; mode=display">f(x, y)=\frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}</script>
+
+<script type="math/tex; mode=display">F_{z}(z)=P\{Z{\leq}z\}=P\{\sqrt{x^2+y^2}{\leq}z\}=P\{x^2+y^2{\leq}z^2\}</script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+if\ z<0, F_{z}(z)=0 %]]></script>
+
+<script type="math/tex; mode=display">if\ z>0, F_{z}(z)={\iint \limits_{x^2+y^2{\leq}z^2}} {\frac{1}{2\pi\sigma^2}}
+e^{-{\frac{x^2+y^2}{2\sigma^2}}} dxdy={\frac{1}{2\pi\sigma^2}} {\int_0^{2\pi} d\theta}
+{\int_0^z e^{-\frac{r^2}{2\sigma^2}}rdr}=\frac{1}{sigma^2}\int_0^z
+e^{-\frac{r^2}{2\sigma^2}}rdr=1-e^{-\frac{z^2}{2\sigma^2}}</script>
+
+<script type="math/tex; mode=display">f_{z}(z)=F^{'}_{z}(z)=\frac{z}{\sigma^2}e^{-\frac{z^2}{2\sigma^2}}(z{\leq}0)</script>
+
+<p>数学期望：</p>
+
+<script type="math/tex; mode=display">\mu(X)=\int_0^{+ \infty} \frac{x^2}{\sigma^2}e^{-\frac{x^2}{2\sigma^2}}dx=
+-\int_0^{+ \infty} xd(e^{-\frac{x^2}{2\sigma^2}})=\sigma\sqrt{\frac{\pi}{2}}</script>
+
+<p>方差：</p>
+
+<script type="math/tex; mode=display">var(X)=\int_0^{+\infty} \frac{x^3}{\sigma^2}e^{-\frac{x^2}{2\sigma^2}}dx-\mu^2(X)=
+-\int_0^{+\infty}x^2d(e^{-\frac{x^2}{2\sigma^2}})-\mu^2(X)=2\sigma^2-\mu^2(X)=
+2\sigma^2-(\sigma\sqrt{\frac{\pi}{2}})^2=\frac{4-\pi}{2}\sigma^2</script>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/Genetic-Algorithm/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/Python-Learn-chapter3/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+        </article>
+		</div>
+		</div>
+	</body>
+</html>

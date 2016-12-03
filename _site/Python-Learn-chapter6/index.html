@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="author" content="CHAI" />
+		<title>
+			
+				
+				Python学习手册 笔记（第六章）
+			
+		</title>
+
+		<link rel="shortcut icon" href="/image/favicon.ico" />
+		<link href="/feed/" rel="alternate" title="CHAI" type="application/atom+xml" />
+		<link rel="stylesheet" href="/media/css/style.css" />
+		<link rel="stylesheet" href="/media/css/highlight.css" />
+		<script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+	</head>
+
+	<body>
+		<div id="container">
+		<div id="main" role="main">
+
+		<header>
+			<h1>
+				Python学习手册 笔记（第六章）
+			</h1>
+		</header>
+
+		<nav>
+			<span><a title="网站首页" class="" href="/">首页</a></span>
+			<span><a title="文章分类" class="" href="/categories/">分类</a></span>
+			<span><a title="标签索引" class="" href="/tags/">标签</a></span>
+			<span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+			<span><a title="关于站长" class="" href="/about/">关于</a></span>
+        </nav>
+
+        <article class="content">
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+			<section class="meta">
+<span class="time">
+    <time datetime="2016-11-09">2016-11-09</time>
+</span>
+
+ |
+<span class="categories">
+  分类
+  
+  <a href="/categories/#Python" title="Python">Python</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  标签
+  
+  <a href="/tags/#Python学习手册" title="Python学习手册">Python学习手册</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="第6章-动态类型简介">第6章 动态类型简介</h2>
+<h3 id="缺少类型声明语句的情况">缺少类型声明语句的情况</h3>
+<ul>
+  <li>python中，类是在运行中自动决定的</li>
+</ul>
+
+<h3 id="变量对象和引用">变量、对象和引用</h3>
+<ul>
+  <li>python赋值时的操作：1.创建一个对象来代表3；2.创建一个变量a，如果他还没有被创建；3.将变量与新的对象3相连接。</li>
+  <li>变量和对象保存在内存中的不同部分，通过连接相关联。变量总是连接到对象，绝不会连接到其他变量上，但是更大的对象可能连接到其他的对象（如列表等）</li>
+  <li>从变量到对象的连接称作引用</li>
+  <li>变量被使用，python自动跟随这个变量到对象的连接</li>
+  <li>1.变量时一个系统表的元素，拥有指向对象的连接的空间；2.对象是分配的一块内存，有足够的空间去表示它们所代表的值；3.引用是自动形成从变量到对象的指针</li>
+  <li>每一个对象都有两个标准的头部信息：一个类型标志符去标识这个对象的类型，一个引用的计数器，决定是不是可以回收这个对象</li>
+</ul>
+
+<h3 id="类型属于对象而不是变量">类型属于对象，而不是变量</h3>
+<ul>
+  <li>python的引用类似于c的指针。事实上，引用是以指针的形式实现的。</li>
+  <li>修改变量，只是修改了对不同对象的引用</li>
+  <li>对象知道自己的类型。每个对象包含一个头部信息，包含了每个对象的类型。例如，整数对象3，包含了值3和一个头部信息，这是一个整数对象（严格上，一个指向int的对象的指针）；’spam’字符串的对象的标志符指向一个字符串类型</li>
+</ul>
+
+<h3 id="对象的垃圾收集">对象的垃圾收集</h3>
+<ul>
+  <li>每个变量名被赋予一个新的对象，之前对象占用的空间会被收回（如果他没有被其他的变量名或对象所引用）。这种自动回收对象空间的技术叫做垃圾收集。</li>
+  <li>每个对象中保持了一个计数器，计数器记录了当前指向该对象的引用的数目。一旦计数器为0，这个对象的内存空间会被自动回收。</li>
+  <li>意味着在脚本中任意使用对象不需要考虑释放内存空间</li>
+  <li>python循环检查器的更多细节，参见python库手册中gc模块文档</li>
+</ul>
+
+<h3 id="共享引用">共享引用</h3>
+<ul>
+  <li>a和b引用了相同的对象，称为共享引用</li>
+</ul>
+
+<h3 id="共享引用和在原处修改">共享引用和在原处修改</h3>
+<pre><code class="language-python3">L1 = [2, 3, 4]
+L2 = L1
+</code></pre>
+<ul>
+  <li>列表中的元素是通过位置进行读取的，L1[0]引用了对象2</li>
+  <li>列表自身也是对象
+    <pre><code class="language-python3">L1 = [2, 3, 4]
+L2 = L1
+L1[0] = 24
+L1 # [24, 3, 4]
+L2 # [24, 3, 4]
+</code></pre>
+  </li>
+  <li>没有改变L1，改变了L1所引用对象的一个元素</li>
+  <li>如果你不想这样的现象发生，需要python拷贝对象，而不是创建引用。复制一个字典或集合应用X.copy()</li>
+</ul>
+
+<h3 id="共享引用和相等">共享引用和相等</h3>
+<ul>
+  <li>==操作符，测试两个被引用对象是否有相同的值；is操作符，检查对象的同一性，实际上，is只是比较实现引用的指针
+    <pre><code class="language-python3">X = 42
+Y = 42
+X == Y # True
+X is Y # True
+</code></pre>
+  </li>
+  <li>原因是小的整数和字符串被缓存并复用了,是为了执行速度而采用的优化其模块的众多方法之一</li>
+  <li>sys模块中的getrefcount函数会返回对象的引用次数</li>
+</ul>
+
+<h3 id="动态类型随处可见">动态类型随处可见</h3>
+<ul>
+  <li>动态类型是python中多态的根本</li>
+</ul>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/Python-Learn-chapter5/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/Machine-Learning/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+        </article>
+		</div>
+		</div>
+	</body>
+</html>
