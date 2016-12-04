@@ -107,19 +107,21 @@
 
 <h3 id="共享引用和在原处修改">共享引用和在原处修改</h3>
 
-<pre><code class="language-python3">L1 = [2, 3, 4]
-L2 = L1
-</code></pre>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">L1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">L2</span> <span class="o">=</span> <span class="n">L1</span></code></pre></figure>
+
 <ul>
   <li>列表中的元素是通过位置进行读取的，L1[0]引用了对象2</li>
-  <li>列表自身也是对象
-    <pre><code class="language-python3">L1 = [2, 3, 4]
-L2 = L1
-L1[0] = 24
-L1 # [24, 3, 4]
-L2 # [24, 3, 4]
-</code></pre>
-  </li>
+  <li>列表自身也是对象</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">L1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">L2</span> <span class="o">=</span> <span class="n">L1</span>
+<span class="n">L1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">24</span>
+<span class="n">L1</span> <span class="c"># [24, 3, 4]</span>
+<span class="n">L2</span> <span class="c"># [24, 3, 4]</span></code></pre></figure>
+
+<ul>
   <li>没有改变L1，改变了L1所引用对象的一个元素</li>
   <li>如果你不想这样的现象发生，需要python拷贝对象，而不是创建引用。复制一个字典或集合应用X.copy()</li>
 </ul>
@@ -127,13 +129,15 @@ L2 # [24, 3, 4]
 <h3 id="共享引用和相等">共享引用和相等</h3>
 
 <ul>
-  <li>==操作符，测试两个被引用对象是否有相同的值；is操作符，检查对象的同一性，实际上，is只是比较实现引用的指针
-    <pre><code class="language-python3">X = 42
-Y = 42
-X == Y # True
-X is Y # True
-</code></pre>
-  </li>
+  <li>==操作符，测试两个被引用对象是否有相同的值；is操作符，检查对象的同一性，实际上，is只是比较实现引用的指针</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">X</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">X</span> <span class="o">==</span> <span class="n">Y</span> <span class="c"># True</span>
+<span class="n">X</span> <span class="ow">is</span> <span class="n">Y</span> <span class="c"># True</span></code></pre></figure>
+
+<ul>
   <li>原因是小的整数和字符串被缓存并复用了,是为了执行速度而采用的优化其模块的众多方法之一</li>
   <li>sys模块中的getrefcount函数会返回对象的引用次数</li>
 </ul>

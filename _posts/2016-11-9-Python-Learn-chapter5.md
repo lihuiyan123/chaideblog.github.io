@@ -64,19 +64,22 @@ excerpt: 多进制数、小数、分数和集合。
 
 ### 数字显示的格式
 
-```python3
+{% highlight python %}
 '%e' % num # '3.333333e-001'
 '%4.2f' % num # '0.33'
 '{0:4.2f}'.format(num) # '0.33'
-```
+{% endhighlight %}
+
 ### 比较：一般的和连续的
 
 * str和repr显示格式：repr(默认的交互模式回显)产生的结果好像他们是代码；str转变为一种对用户更加友好的格式；str用于一般用途，repr用于额外细节；str也是字符串数据类型的名字
 * python允许多个比较连续执行，这样运行速度略快
-```python3
+
+{% highlight python %}
 X < Y > Z # 等于X < Y and Y > Z
 1 == 2 < 3 # 等于1 == 2 and 2 < 3
-```
+{% endhighlight %}
+
 ### 除法：传统除法、Floor除法和真除法
 
 * /真除法：不管操作数的类型，返回包含任何余数的一个浮点结果
@@ -85,74 +88,88 @@ X < Y > Z # 等于X < Y and Y > Z
 ### Floor除法VS截断除法
 
 * 向下取整
-```python3
+
+{% highlight python %}
 import math
 math.floor(2.5) # 2
 math.floor(-2.5) # -3
 math.trunc(2.5) # 2
 math.trunc(-2.5) # -2
-```
+{% endhighlight %}
 
 ### 十六进制、八进制和二进制
 
 * 把整数转换为其他进制的字符串
-```python3
+
+{% highlight python %}
 oct(64), hex(64), bin(64) # ('0o100', '0x40', '0b1000000')
-```
+{% endhighlight %}
+
 * 将一个数字的字符串变换为一个整数，第二个参数确定进制
-```python3
+
+{% highlight python %}
 int('64'), int('100', 8), int('40', 16), int('1000000', 2) # (64, 64, 64, 64)
-```
+{% endhighlight %}
+
 * eval函数，会把字符串作为python代码，但会运行的慢
-```python3
+
+{% highlight python %}
 eval('64'), eval('0o100'), eval('0x40'), eval('0b1000000')
-```
+{% endhighlight %}
 
 ### 其他的内置数学工具
 
 * random模块，可以提供0-1间的任意浮点数，选择2个数字间的任意整数，在一个序列中任意挑选一项
-```python3
+
+{% highlight python %}
 import random
 random.random() # 0-1任意浮点数
 random.randint(1, 10) # 1-10间任意整数
 random.choice(['Life of Brian', 'Holy Grail', 'Meaning of Life'])
-```
+{% endhighlight %}
 
 ### 小数对象
 
 * 浮点数缺乏精确性
-```python3
+
+{% highlight python %}
 0.1 + 0.1 + 0.1 - 0.3 # 5.551115123125783e-17
-```
+{% endhighlight %}
+
 * 小数对象：通过导入的模块调用函数后创建，有固定的位数和小数点，因此有固定的精度
-```python3
+
+{% highlight python %}
 from decimal import decimal
 Decimal('0.1') + Decimal('0.1') + Decimal('0.1') - Decimal('0.3') # Decimal('0.0')
-```
+{% endhighlight %}
+
 注释：python会自动升级为小数位数最多的
 
 ### 设置全局精度
 
 * decimal模块可以设置所有小数数值的精度、设置错误处理
-```python3
+
+{% highlight python %}
 import decimal
 decimal.getcontext().prec = 4
 decimal.Decimal(1) / decimal.Decimal(7) # Decimal('0.1429')
-```
+{% endhighlight %}
 
 ### 小数上下文管理器
 
 * 可以使用上下文管理器，设置临时精度。语句退出后精度重新设置为初始值
-```python3
+
+{% highlight python %}
 with decimal.localcontext() as ctx:
 	ctx.prec = 2
     decimal.Decimal('1.00') / decimal.Decimal('3.00') # Decimal('0,33')
-```
+{% endhighlight %}
 
 ### 分数类型
 
 * 分数，避免了浮点数的不精确和局限性
-```python3
+
+{% highlight python %}
 from fractions import Fraction
 x = Fraction(1, 3)
 y = Fraction(4, 6)
@@ -163,39 +180,43 @@ Fraction('.25') # Fraction(1, 4)
 x + y # Fraction(1, 1)
 Fraction('.25') + Fraction('1.25') # Fraction(3, 2)
 Fraction.from_float(1.75)
-```
+{% endhighlight %}
 
 ### 集合
 
 * 集合是无序的、唯一的、不可改变的，建立时会排序
-```python3
+
+{% highlight python %}
 set([1, 2, 3, 4]) # {1, 2, 3, 4}
 set('spam') # {'a', 'p', 's', 'm'}
-```
-```python3
+{% endhighlight %}
+
+{% highlight python %}
 s1 = {1, 2, 3, 4}
 s1 & {1, 3} # {1, 3}
 s1 | {1, 5, 3, 6} # {1, 2, 3, 4, 5, 6}
 s1 - {1, 3, 4} # {2}
 s1 > {1, 3} # True
-```
-```python3
+{% endhighlight %}
+
+{% highlight python %}
 {1, 2, 3}.union([3, 4]) # {1, 2, 3, 4}
 {1, 2, 3}.union({3, 4}) # {1, 2, 3, 4}
 {1, 2, 3}.intersection((1, 3, 5)) # {1, 3}
 {1, 2, 3}.issubset(range(-5, 5)) # True
-```
+{% endhighlight %}
 
 ### 不可变限制和冻结集合
 
 * 列表和字典不能嵌入集合，元组可以嵌入
-```python3
+
+{% highlight python %}
 s = {1.23}
 s.add([1, 2, 3]) # TypeError: unhashable type: 'list'
 s.add({'a':1}) # TypeError: unhashable type: 'dict'
 s.add((1, 2, 3))
 s # {1.23, (1, 2, 3)}
-```
+{% endhighlight %}
 
 ### 为什么使用集合
 

@@ -88,18 +88,17 @@
 
 <h3 id="文件">文件</h3>
 
-<pre><code class="language-python3">fileOut = open(r'C:\spam', 'w') # w是写入
-fileIn = open('data', 'r') # r是读
-fileIn = open('data') # r是默认
-aString = fileIn.read() # 将文件读进单一字符串
-aString = fileIn.read(N) # 读取文件后N个字节
-aString = fileIn.readline() # 读取一行
-aList = fileIn.readlines() # 将文件读取到一个列表，每行一个字符串
-fileOut.write(aString) # 将字符串写到文件
-fileOut.writelines(aList) # 将字符串列表写进文件
-fileOut.close()
-fileOut.flush() # 把输出缓冲区刷到硬盘中，但不关闭文件
-</code></pre>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">fileOut</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">r&#39;C:\spam&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="c"># w是写入</span>
+<span class="n">fileIn</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="c"># r是读</span>
+<span class="n">fileIn</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">)</span> <span class="c"># r是默认</span>
+<span class="n">aString</span> <span class="o">=</span> <span class="n">fileIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c"># 将文件读进单一字符串</span>
+<span class="n">aString</span> <span class="o">=</span> <span class="n">fileIn</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="c"># 读取文件后N个字节</span>
+<span class="n">aString</span> <span class="o">=</span> <span class="n">fileIn</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span> <span class="c"># 读取一行</span>
+<span class="n">aList</span> <span class="o">=</span> <span class="n">fileIn</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span> <span class="c"># 将文件读取到一个列表，每行一个字符串</span>
+<span class="n">fileOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">aString</span><span class="p">)</span> <span class="c"># 将字符串写到文件</span>
+<span class="n">fileOut</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">aList</span><span class="p">)</span> <span class="c"># 将字符串列表写进文件</span>
+<span class="n">fileOut</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">fileOut</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span> <span class="c"># 把输出缓冲区刷到硬盘中，但不关闭文件</span></code></pre></figure>
 
 <h3 id="打开文件">打开文件</h3>
 
@@ -119,19 +118,18 @@ fileOut.flush() # 把输出缓冲区刷到硬盘中，但不关闭文件
 <h3 id="用pickle储存python的原生对象">用pickle储存python的原生对象</h3>
 
 <ul>
-  <li>pickle模块能够在文件中储存几乎任何python对象的高级工具，并不要求我们把字符串转换来转换去
-    <pre><code class="language-python3">D = {'a': 1, 'b': 2}
-F = open('datafile.pkl', 'wb')
-import pickle
-pickle.dump(D, F)
-F.close()
-</code></pre>
-    <pre><code class="language-python3">import pickle
-F = open('datafile.pkl', 'rb')
-E = pickle.load(F)
-</code></pre>
-  </li>
+  <li>pickle模块能够在文件中储存几乎任何python对象的高级工具，并不要求我们把字符串转换来转换去</li>
 </ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">F</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;datafile.pkl&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">F</span><span class="p">)</span>
+<span class="n">F</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">F</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;datafile.pkl&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">E</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">F</span><span class="p">)</span></code></pre></figure>
 
 <h3 id="文件上下文管理器">文件上下文管理器</h3>
 
@@ -197,23 +195,22 @@ E = pickle.load(F)
 
 <h3 id="重复能够增加层次深度">重复能够增加层次深度</h3>
 
-<pre><code class="language-python3">L = [3, 4, 5]
-X = L * 4
-Y = [L] * 4
-X # [3, 4, 5, 3, 4, 5, 3, 4, 5, 3, 4, 5]
-Y # [[3, 4, 5], [3, 4, 5], [3, 4, 5], [3, 4, 5]]
-</code></pre>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">L</span> <span class="o">*</span> <span class="mi">4</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="n">L</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+<span class="n">X</span> <span class="c"># [3, 4, 5, 3, 4, 5, 3, 4, 5, 3, 4, 5]</span>
+<span class="n">Y</span> <span class="c"># [[3, 4, 5], [3, 4, 5], [3, 4, 5], [3, 4, 5]]</span></code></pre></figure>
 
 <h3 id="留意循环数据结构">留意循环数据结构</h3>
 
 <ul>
-  <li>一个复合对象包含指向自身的引用，称为循环对象。python在对象中检测到循环，会打印成<code>[...]</code>，而不会陷入无限循环
-    <pre><code class="language-python3">L = ['grail']
-L.append(L)
-L # ['grail', [...]]
-</code></pre>
-  </li>
+  <li>一个复合对象包含指向自身的引用，称为循环对象。python在对象中检测到循环，会打印成<code>[...]</code>，而不会陷入无限循环</li>
 </ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;grail&#39;</span><span class="p">]</span>
+<span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="n">L</span> <span class="c"># [&#39;grail&#39;, [...]]</span></code></pre></figure>
+
 
 </section>
 <section align="right">

@@ -25,7 +25,7 @@ excerpt: python中的元组和文件。
 
 ### 文件
 
-```python3
+{% highlight python %}
 fileOut = open(r'C:\spam', 'w') # w是写入
 fileIn = open('data', 'r') # r是读
 fileIn = open('data') # r是默认
@@ -37,7 +37,7 @@ fileOut.write(aString) # 将字符串写到文件
 fileOut.writelines(aList) # 将字符串列表写进文件
 fileOut.close()
 fileOut.flush() # 把输出缓冲区刷到硬盘中，但不关闭文件
-```
+{% endhighlight %}
 
 ### 打开文件
 
@@ -53,18 +53,20 @@ fileOut.flush() # 把输出缓冲区刷到硬盘中，但不关闭文件
 ### 用pickle储存python的原生对象
 
 * pickle模块能够在文件中储存几乎任何python对象的高级工具，并不要求我们把字符串转换来转换去
-```python3
+
+{% highlight python %}
 D = {'a': 1, 'b': 2}
 F = open('datafile.pkl', 'wb')
 import pickle
 pickle.dump(D, F)
 F.close()
-```
-```python3
+{% endhighlight %}
+
+{% highlight python %}
 import pickle
 F = open('datafile.pkl', 'rb')
 E = pickle.load(F)
-```
+{% endhighlight %}
 
 ### 文件上下文管理器
 
@@ -114,19 +116,20 @@ E = pickle.load(F)
 
 ### 重复能够增加层次深度
 
-```python3
+{% highlight python %}
 L = [3, 4, 5]
 X = L * 4
 Y = [L] * 4
 X # [3, 4, 5, 3, 4, 5, 3, 4, 5, 3, 4, 5]
 Y # [[3, 4, 5], [3, 4, 5], [3, 4, 5], [3, 4, 5]]
-```
+{% endhighlight %}
 
 ### 留意循环数据结构
 
 * 一个复合对象包含指向自身的引用，称为循环对象。python在对象中检测到循环，会打印成`[...]`，而不会陷入无限循环
-```python3
+
+{% highlight python %}
 L = ['grail']
 L.append(L)
 L # ['grail', [...]]
-```
+{% endhighlight %}

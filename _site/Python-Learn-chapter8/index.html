@@ -86,24 +86,23 @@
   <li>与列表不同，保存在字典中的项无特定的顺序</li>
   <li>字典可以在原处增长或缩短（无需生成一份拷贝），支持深度的嵌套</li>
   <li>通过给索引赋值，字典可以在原处修改，但不支持用于字符串和列表中的序列操作</li>
-  <li>字典是作为散列表（支持快速检索的数据结构）来实现的
-    <pre><code class="language-python3">D = dict.fromkeys(keyslist, values) # 生成键，内容都为values
-D = ditc(zip(keyslist, valueslist))
-'a' in D # 键是否在字典中
-D.keys() # 返回可迭代的视图
-D.values() # 返回可迭代的视图
-D.items() # 返回可迭代的视图
-D.copy()
-D.get(key, default)
-</code></pre>
-    <pre><code class="language-python3">D.update(OtherD) # 将OtherD合并入D
-D.pop(key)
-len(D)
-D[key] = 42
-del D[key]
-</code></pre>
-  </li>
+  <li>字典是作为散列表（支持快速检索的数据结构）来实现的</li>
 </ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">D</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">keyslist</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span> <span class="c"># 生成键，内容都为values</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">ditc</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keyslist</span><span class="p">,</span> <span class="n">valueslist</span><span class="p">))</span>
+<span class="s">&#39;a&#39;</span> <span class="ow">in</span> <span class="n">D</span> <span class="c"># 键是否在字典中</span>
+<span class="n">D</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="c"># 返回可迭代的视图</span>
+<span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="c"># 返回可迭代的视图</span>
+<span class="n">D</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="c"># 返回可迭代的视图</span>
+<span class="n">D</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">D</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">OtherD</span><span class="p">)</span> <span class="c"># 将OtherD合并入D</span>
+<span class="n">D</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="n">D</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="k">del</span> <span class="n">D</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></code></pre></figure>
 
 <h3 id="字典的基本操作">字典的基本操作</h3>
 
@@ -124,18 +123,20 @@ del D[key]
 <h3 id="字典视图">字典视图</h3>
 
 <ul>
-  <li>字典视图并非创建后不能改变——它可以动态反映在视图对象创建之后对字典的修改
-    <pre><code class="language-python3">D = {'a':1, 'b':2, 'c':3}
-K = D.keys()
-V = D.values()
-list(D) # ['b', 'c', 'a']
-list(V) # [2, 3, 1]
-del D['b']
-D # {'c': 3, 'a': 1}
-list(K) # ['c', 'a']
-list(V) # [3, 1]
-</code></pre>
-  </li>
+  <li>字典视图并非创建后不能改变——它可以动态反映在视图对象创建之后对字典的修改</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">D</span><span class="p">)</span> <span class="c"># [&#39;b&#39;, &#39;c&#39;, &#39;a&#39;]</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">V</span><span class="p">)</span> <span class="c"># [2, 3, 1]</span>
+<span class="k">del</span> <span class="n">D</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span>
+<span class="n">D</span> <span class="c"># {&#39;c&#39;: 3, &#39;a&#39;: 1}</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="c"># [&#39;c&#39;, &#39;a&#39;]</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">V</span><span class="p">)</span> <span class="c"># [3, 1]</span></code></pre></figure>
+
+<ul>
   <li>字典视图对象类似集合，可以支持交集、并集等集合操作</li>
 </ul>
 

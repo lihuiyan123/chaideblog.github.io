@@ -96,8 +96,8 @@
   <li>Example:</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python3" data-lang="python3"><span class="c">#!/usr/local/bin/python</span>
-<span class="nb">print</span><span class="p">(</span><span class="s">&#39;The Bright Side &#39;</span> <span class="o">+</span> <span class="s">&#39;of Life...&#39;</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/local/bin/python</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;The Bright Side &#39;</span> <span class="o">+</span> <span class="s">&#39;of Life...&#39;</span><span class="p">)</span></code></pre></figure>
 
 <p>注释：从技术上来说，第一行是python注释。这种情况下，操作系统使用它找到解释器来运行文件其他部分的程序代码</p>
 
@@ -107,8 +107,8 @@
   <li>一些UNIX系统可以避免硬编码python解释器的路径</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python3" data-lang="python3"><span class="c">#!/usr/bin/env python</span>
-<span class="nb">print</span><span class="p">(</span><span class="s">&#39;The Bright Side &#39;</span> <span class="o">+</span> <span class="s">&#39;of Life...&#39;</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/env python</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;The Bright Side &#39;</span> <span class="o">+</span> <span class="s">&#39;of Life...&#39;</span><span class="p">)</span></code></pre></figure>
 
 <p>注释：env程序可以通过系统的搜索路径的设置定位python解释器</p>
 
@@ -118,13 +118,13 @@
   <li>可选的接受字符串，这些字符串作为提示打印出来</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python3" data-lang="python3"><span class="nb">input</span><span class="p">(</span><span class="s">&#39;Press Enter to exit&#39;</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">input</span><span class="p">(</span><span class="s">&#39;Press Enter to exit&#39;</span><span class="p">)</span></code></pre></figure>
 
 <ul>
   <li>以字符串的形式为脚本返回读入的文本</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python3" data-lang="python3"><span class="n">nextinput</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">nextinput</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span></code></pre></figure>
 
 <ul>
   <li>在shell支持输入流的重定向</li>
@@ -140,8 +140,8 @@
   <li>如果想要再次运行文件，需要调用imp标准库中的reload函数</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python3" data-lang="python3"><span class="kn">from</span> <span class="nn">imp</span> <span class="k">import</span> <span class="n">reload</span>
-<span class="n">reload</span><span class="p">(</span><span class="n">script1</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">imp</span> <span class="kn">import</span> <span class="nb">reload</span>
+<span class="nb">reload</span><span class="p">(</span><span class="n">script1</span><span class="p">)</span></code></pre></figure>
 
 <p>注释：reload函数希望获得的参数是一个已经加载了的模块对象的名称，在重载前，请确保成功导入了这个模块。最后一行输出是reload调用的返回值的打印显示</p>
 
@@ -154,8 +154,8 @@
   <li>Example:</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python3" data-lang="python3"><span class="kn">import</span> <span class="nn">myfile</span> <span class="c"># myfile: title = &#39;The Meaning of Life&#39;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">myfile</span><span class="o">.</span><span class="n">title</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">myfile</span> <span class="c"># myfile: title = &#39;The Meaning of Life&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">myfile</span><span class="o">.</span><span class="n">title</span><span class="p">)</span></code></pre></figure>
 
 <p>注释：这里表达式代表了object.attribute的语法，可以从任何的object中取出任意的属性</p>
 <ul>
@@ -164,14 +164,14 @@
 treenames.py文件：</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python3" data-lang="python3"><span class="n">a</span> <span class="o">=</span> <span class="s">&#39;dead&#39;</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="s">&#39;dead&#39;</span>
 <span class="n">b</span> <span class="o">=</span> <span class="s">&#39;parrot&#39;</span>
 <span class="n">c</span> <span class="o">=</span> <span class="s">&#39;sketch&#39;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span></code></pre></figure>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-python3" data-lang="python3"><span class="kn">import</span> <span class="nn">threenames</span> <span class="c"># dead parrot sketch</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">threenames</span> <span class="c"># dead parrot sketch</span>
 <span class="n">threenames</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="n">threenames</span><span class="o">.</span><span class="n">c</span> <span class="c"># (&#39;parrot&#39;, &#39;sketch&#39;)</span>
-<span class="kn">from</span> <span class="nn">threenames</span> <span class="k">import</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span>
+<span class="kn">from</span> <span class="nn">threenames</span> <span class="kn">import</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span>
 <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="c"># (&#39;parrot&#39;, &#39;sketch&#39;)</span></code></pre></figure>
 
 <p>注释：内置的dir函数可以获得模块内部的变量名列表，带下划线的是python预定义的内置变量名</p>

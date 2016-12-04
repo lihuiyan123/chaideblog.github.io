@@ -40,31 +40,36 @@ excerpt: python的核心是动态。
 
 ### 共享引用和在原处修改
 
-```python3
+{% highlight python %}
 L1 = [2, 3, 4]
 L2 = L1
-```
+{% endhighlight %}
+
 * 列表中的元素是通过位置进行读取的，L1[0]引用了对象2
 * 列表自身也是对象
-```python3
+
+{% highlight python %}
 L1 = [2, 3, 4]
 L2 = L1
 L1[0] = 24
 L1 # [24, 3, 4]
 L2 # [24, 3, 4]
-```
+{% endhighlight %}
+
 * 没有改变L1，改变了L1所引用对象的一个元素
 * 如果你不想这样的现象发生，需要python拷贝对象，而不是创建引用。复制一个字典或集合应用X.copy()
 
 ### 共享引用和相等
 
 * ==操作符，测试两个被引用对象是否有相同的值；is操作符，检查对象的同一性，实际上，is只是比较实现引用的指针
-```python3
+
+{% highlight python %}
 X = 42
 Y = 42
 X == Y # True
 X is Y # True
-```
+{% endhighlight %}
+
 * 原因是小的整数和字符串被缓存并复用了,是为了执行速度而采用的优化其模块的众多方法之一
 * sys模块中的getrefcount函数会返回对象的引用次数
 
