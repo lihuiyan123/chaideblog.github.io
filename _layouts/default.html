@@ -10,7 +10,7 @@
 			{% if page.path == 'index.html' %}
 				{{ site.name }}
 			{% else %}
-				{% unless page.id %}{{ site.name }} - {% endunless %}
+				{% unless page.id %}{{ site.name }} {% endunless %}
 				{{ page.title }}
 			{% endif %}
 		</title>
