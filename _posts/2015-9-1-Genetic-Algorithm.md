@@ -84,6 +84,7 @@ function parentsPop = Select(matrixFitness,pop,SELECTRATE)
     %将首个比随机数小的积累概率小的位置的个体遗传下去
     end
 {% endhighlight %}
+
 ### 编码
 
 编码是为了产生一个2进制染色体，方便进行交叉和变异。当然，编码规则具体问题需要具体规定。
@@ -106,6 +107,7 @@ function binPop = Codeing(pop)
 {% endhighlight %}
 
 ### 解码
+
 有编码，当然也要解码。
 {% highlight matlab %}
 function pop = Incodeing(binPop)
@@ -120,7 +122,9 @@ function pop = Incodeing(binPop)
     end
     pop = pop./10^6-1;
 {% endhighlight %}
+
 ### 交叉
+
 交叉互换是生物遗传变异的主要形式，正是因为交叉互换，带给了我们一些和父母都不相同的生理特征。
 
 ![Genetic_Algorithm_6]({{ site.url }}/image/Genetic_Algorithm/6.jpg)
@@ -154,6 +158,7 @@ function kidsPop = Crossover(parentsPop,NUMPOP,CROSSOVERRATE)
 {% endhighlight %}
 
 ### 变异
+
 在遗传变异过程中，另一个重要的过程就是变异。
 
 ![Genetic_Algorithm_9]({{ site.url }}/image/Genetic_Algorithm/9.jpg)
