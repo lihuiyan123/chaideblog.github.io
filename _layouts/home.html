@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN" >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="author" content="{{ site.author }}" />
@@ -7,12 +7,12 @@
 			{% if page.path == 'index.html' %}
 				{{ site.name }}
 			{% else %}
-				{% unless page.id %}{{ site.name }} - {% endunless %}
+				{% unless page.id %}{{ site.name }} {% endunless %}
 				{{ page.title }}
 			{% endif %}
 		</title>
 
-		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="shortcut icon" href="/image/favicon.ico" />
 		<link href="/feed/" rel="alternate" title="{{ site.author }}" type="application/atom+xml" />
 		<link rel="stylesheet" href="/media/css/style.css" />
 		<link rel="stylesheet" href="/media/css/highlight.css" />
@@ -22,18 +22,57 @@
 
 	<body>
 		<div id="container">
-			<div id="home">
-				<header>
-					<h1>{{ page.title }}</h1>
-				</header>
+		<div id="main" role="main">
 
-				<nav>
-				<span><a title="网站首页" class="" href="/">首页</a></span>
-				<span><a title="文章分类" class="" href="/categories/">分类</a></span>
-				<span><a title="标签索引" class="" href="/tags/">标签</a></span>
-				<span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
-				</nav>
-			</div>
+		<header>
+			<h1>
+				{{ page.title }}
+			</h1>
+		</header>
+
+		<nav>
+			<span><a title="网站首页" class="" href="/">首页</a></span>
+			<span><a title="文章分类" class="" href="/categories/">分类</a></span>
+			<span><a title="标签索引" class="" href="/tags/">标签</a></span>
+			<span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+			<span><a title="关于站长" class="" href="/about/">关于</a></span>
+        </nav>
+
+        <article class="content">
+			{{ content }}
+        </article>
 		</div>
+		</div>
+
+		<footer id="displayTime">
+			  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+			  <script language="javascript">
+			  var now = new Date();
+			  function createtime(){
+				  var grt= new Date("12/1/2016 8:00:00");//此处修改你的建站时间或者网站上线时间
+				  now.setTime(now.getTime()+250);
+				  days = (now - grt ) / 1000 / 60 / 60 / 24;
+				  dnum = Math.floor(days);
+				  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+				  hnum = Math.floor(hours);
+				  if(String(hnum).length ==1 ){
+					  hnum = "0" + hnum;
+				  }
+				  minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+				  mnum = Math.floor(minutes);
+				  if(String(mnum).length ==1 ){
+					  mnum = "0" + mnum;
+				  }
+				  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+				  snum = Math.round(seconds);
+				  if(String(snum).length ==1 ){
+					  snum = "0" + snum;
+				}
+				document.getElementById("timeDate").innerHTML = "博客勉强运行"+dnum+"天";
+				document.getElementById("times").innerHTML = hnum + "小时" + mnum + "分" + snum + "秒 ( *・ω・)✄╰ひ╯";
+			}
+			setInterval("createtime()",250);
+			</script>
+		</footer>
 	</body>
 </html>

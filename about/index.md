@@ -19,6 +19,8 @@ layout: default
 
 ### 联系方式：
 
+weibo：[不要叫朕起床Orz](http://weibo.com/p/1005052330502705/home?from=page_100505&mod=TAB&is_all=1#place)
+
 邮箱：uhznow@163.com
 
 GitHub：[http://github.com/Augustrain](http://github.com/Augustrain)
