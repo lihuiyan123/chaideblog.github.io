@@ -11,6 +11,7 @@ layout: default
 * 学习 Python、C、MATLAB、机器学习
 
 ---
+
 ### 经历：
 
 * 2013.09 ~ 至今 西安电子搞基大学
