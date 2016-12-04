@@ -7,7 +7,7 @@ url: https://chaideblog.github.io/
 # Building settings
 mardown: redcarpet
 permalink: /:title/
-highlighter: pygments
+highlighter: rouge
 paginate: 20
 paginate_path: "page:num"
 encoding: UTF-8

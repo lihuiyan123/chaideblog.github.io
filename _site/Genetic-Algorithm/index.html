@@ -95,11 +95,11 @@
 
 <p>随机产生一定数量的个体，组成一个种群。代码如下：</p>
 
-<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>pop <span class="p">=</span><span class="w"> </span><span class="nf">IntPop</span><span class="p">(</span>numPop<span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">pop</span> <span class="p">=</span> <span class="p">[];</span><span class="c">%初始化种群矩阵</span>
-    <span class="k">for</span> <span class="n">n</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="n">numPop</span>
-        <span class="n">pop</span><span class="p">(:,</span><span class="n">n</span><span class="p">)</span> <span class="p">=</span> <span class="mi">3</span><span class="o">*</span><span class="nb">rand</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="c">%个体范围［－1，2］</span>
-        <span class="c">%产生初始种群</span>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span> <span class="n">pop</span> <span class="o">=</span> <span class="n">IntPop</span><span class="p">(</span><span class="n">numPop</span><span class="p">)</span>
+    <span class="n">pop</span> <span class="o">=</span> <span class="p">[];</span><span class="c1">%初始化种群矩阵</span>
+    <span class="k">for</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">numPop</span>
+        <span class="n">pop</span><span class="p">(:,</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="nb">rand</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="c1">%个体范围［－1，2］</span>
+        <span class="c1">%产生初始种群</span>
     <span class="k">end</span></code></pre></figure>
 
 <p><img src="http://localhost:4000/image/Genetic_Algorithm/4.jpg" alt="Genetic_Algorithm_4" /></p>
@@ -108,9 +108,9 @@
 
 <p>计算适应度需要个人找到合适的目标函数，适应度函数的优化目标是适应度越大越好。所以，如果你的目标是min，请使用它的倒数，即max＝1/min。本题中，在已知最大值的条件下，使用个体与目标的欧式距离的倒数作为适应度函数。当然，也可以将函数本身作为适应度函数。</p>
 
-<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>fitness <span class="p">=</span><span class="w"> </span><span class="nf">Fitness</span><span class="p">(</span>pop<span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span> <span class="n">n</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">fitness</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">=</span> <span class="mi">1</span><span class="o">/</span><span class="nb">abs</span><span class="p">(</span><span class="n">Fx</span><span class="p">(</span><span class="n">pop</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="o">-</span><span class="mf">1.836394128656826</span><span class="p">);</span>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span> <span class="n">fitness</span> <span class="o">=</span> <span class="n">Fitness</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">fitness</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">/</span><span class="nb">abs</span><span class="p">(</span><span class="n">Fx</span><span class="p">(</span><span class="n">pop</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="o">-</span><span class="mf">1.836394128656826</span><span class="p">);</span>
     <span class="k">end</span></code></pre></figure>
 
 <h3 id="选择">选择</h3>
@@ -121,58 +121,58 @@
 
 <p>程序如下：</p>
 
-<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>parentsPop <span class="p">=</span><span class="w"> </span><span class="nf">Select</span><span class="p">(</span>matrixFitness,pop,SELECTRATE<span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">sumFitness</span> <span class="p">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">matrixFitness</span><span class="p">);</span><span class="c">%计算所有个体的适应度之和</span>
-    <span class="n">accP</span> <span class="p">=</span> <span class="p">[];</span><span class="c">%积累概率</span>
-    <span class="k">for</span> <span class="n">n</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">accP</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">=</span> <span class="n">sum</span><span class="p">(</span><span class="n">matrixFitness</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">))</span><span class="o">./</span><span class="n">sumFitness</span><span class="p">;</span>
-        <span class="c">%计算从1到n的积累概率</span>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span> <span class="n">parentsPop</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="n">matrixFitness</span><span class="p">,</span><span class="n">pop</span><span class="p">,</span><span class="n">SELECTRATE</span><span class="p">)</span>
+    <span class="n">sumFitness</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">matrixFitness</span><span class="p">);</span><span class="c1">%计算所有个体的适应度之和</span>
+    <span class="n">accP</span> <span class="o">=</span> <span class="p">[];</span><span class="c1">%积累概率</span>
+    <span class="k">for</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">accP</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">matrixFitness</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">))</span><span class="o">.</span><span class="p">/</span><span class="n">sumFitness</span><span class="p">;</span>
+        <span class="c1">%计算从1到n的积累概率</span>
         <span class="k">end</span>
-        <span class="c">%轮盘赌选择法</span>
-    <span class="k">for</span> <span class="n">n</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">round</span><span class="p">(</span><span class="n">SELECTRATE</span><span class="o">*</span><span class="nb">size</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
-        <span class="n">matrix</span> <span class="p">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">accP</span><span class="o">&gt;</span><span class="nb">rand</span><span class="p">);</span><span class="c">%找到比随机数小的积累概率位置</span>
+        <span class="c1">%轮盘赌选择法</span>
+    <span class="k">for</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">round</span><span class="p">(</span><span class="n">SELECTRATE</span><span class="o">*</span><span class="nb">size</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">accP</span><span class="o">&gt;</span><span class="nb">rand</span><span class="p">);</span><span class="c1">%找到比随机数小的积累概率位置</span>
         <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
             <span class="k">continue</span>
         <span class="k">end</span>
-    <span class="n">parentsPop</span><span class="p">(:,</span><span class="n">n</span><span class="p">)</span> <span class="p">=</span> <span class="n">pop</span><span class="p">(:,</span><span class="n">matrix</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
-    <span class="c">%将首个比随机数小的积累概率小的位置的个体遗传下去</span>
+    <span class="n">parentsPop</span><span class="p">(:,</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">pop</span><span class="p">(:,</span><span class="n">matrix</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+    <span class="c1">%将首个比随机数小的积累概率小的位置的个体遗传下去</span>
     <span class="k">end</span></code></pre></figure>
 
 <h3 id="编码">编码</h3>
 
 <p>编码是为了产生一个2进制染色体，方便进行交叉和变异。当然，编码规则具体问题需要具体规定。</p>
 
-<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>binPop <span class="p">=</span><span class="w"> </span><span class="nf">Codeing</span><span class="p">(</span>pop<span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">codeLength</span> <span class="p">=</span> <span class="mi">22</span><span class="p">;</span><span class="c">%编码长度</span>
-    <span class="n">pop</span> <span class="p">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">pop</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span>^<span class="mi">6</span><span class="p">);</span><span class="c">%[-1,2]浮点数</span>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span> <span class="n">binPop</span> <span class="o">=</span> <span class="n">Codeing</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+    <span class="n">codeLength</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span><span class="c1">%编码长度</span>
+    <span class="n">pop</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">pop</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span><span class="o">^</span><span class="mi">6</span><span class="p">);</span><span class="c1">%[-1,2]浮点数</span>
 
-    <span class="k">for</span> <span class="n">n</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">dec2binPop</span><span class="p">{</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">}</span> <span class="p">=</span> <span class="n">dec2bin</span><span class="p">(</span><span class="n">pop</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">));</span>
-            <span class="n">lengthPop</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">dec2binPop</span><span class="p">{</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">});</span>
+    <span class="k">for</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">dec2binPop</span><span class="p">{</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">}</span> <span class="o">=</span> <span class="nb">dec2bin</span><span class="p">(</span><span class="n">pop</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">));</span>
+            <span class="n">lengthPop</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">dec2binPop</span><span class="p">{</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">});</span>
 
-            <span class="k">for</span> <span class="n">s</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="n">codeLength</span><span class="o">-</span><span class="n">lengthPop</span>
-                <span class="n">dec2binPop</span><span class="p">{</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">}</span> <span class="p">=</span> <span class="p">[</span><span class="s">&#39;0&#39;</span> <span class="n">dec2binPop</span><span class="p">{</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">}];</span>
+            <span class="k">for</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">codeLength</span><span class="o">-</span><span class="n">lengthPop</span>
+                <span class="n">dec2binPop</span><span class="p">{</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">}</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'0'</span> <span class="n">dec2binPop</span><span class="p">{</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">}];</span>
         <span class="k">end</span>
     <span class="k">end</span>
-    <span class="n">binPop</span><span class="p">{</span><span class="n">n</span><span class="p">}</span> <span class="p">=</span> <span class="n">dec2binPop</span><span class="p">{</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">};</span>
+    <span class="n">binPop</span><span class="p">{</span><span class="n">n</span><span class="p">}</span> <span class="o">=</span> <span class="n">dec2binPop</span><span class="p">{</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">};</span>
     <span class="k">end</span></code></pre></figure>
 
 <h3 id="解码">解码</h3>
 
 <p>有编码，当然也要解码。</p>
 
-<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>pop <span class="p">=</span><span class="w"> </span><span class="nf">Incodeing</span><span class="p">(</span>binPop<span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">popNum</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span><span class="c">%染色体包含的参数数量</span>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span> <span class="n">pop</span> <span class="o">=</span> <span class="n">Incodeing</span><span class="p">(</span><span class="n">binPop</span><span class="p">)</span>
+    <span class="n">popNum</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="c1">%染色体包含的参数数量</span>
 
-    <span class="k">for</span> <span class="n">n</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">binPop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">Matrix</span> <span class="p">=</span> <span class="n">binPop</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">};</span>
+    <span class="k">for</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">binPop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">Matrix</span> <span class="o">=</span> <span class="n">binPop</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">};</span>
 
-        <span class="k">for</span> <span class="n">num</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="n">popNum</span>
-            <span class="n">pop</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="p">=</span> <span class="n">bin2dec</span><span class="p">(</span><span class="n">Matrix</span><span class="p">);</span>
+        <span class="k">for</span> <span class="n">num</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">popNum</span>
+            <span class="n">pop</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="nb">bin2dec</span><span class="p">(</span><span class="n">Matrix</span><span class="p">);</span>
         <span class="k">end</span>
     <span class="k">end</span>
-    <span class="n">pop</span> <span class="p">=</span> <span class="n">pop</span><span class="o">./</span><span class="mi">10</span>^<span class="mi">6</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span></code></pre></figure>
+    <span class="n">pop</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="p">/</span><span class="mi">10</span><span class="o">^</span><span class="mi">6</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span></code></pre></figure>
 
 <h3 id="交叉">交叉</h3>
 
@@ -191,19 +191,19 @@
 <p>可以看到，一次交叉就可以产生两个新个体。当时，考虑种群的多样性，我们可以只取一条个体。
 程序如下：</p>
 
-<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>kidsPop <span class="p">=</span><span class="w"> </span><span class="nf">Crossover</span><span class="p">(</span>parentsPop,NUMPOP,CROSSOVERRATE<span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">kidsPop</span> <span class="p">=</span> <span class="p">{[]};</span><span class="n">n</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span> <span class="n">kidsPop</span> <span class="o">=</span> <span class="n">Crossover</span><span class="p">(</span><span class="n">parentsPop</span><span class="p">,</span><span class="n">NUMPOP</span><span class="p">,</span><span class="n">CROSSOVERRATE</span><span class="p">)</span>
+    <span class="n">kidsPop</span> <span class="o">=</span> <span class="p">{[]};</span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="k">while</span> <span class="nb">size</span><span class="p">(</span><span class="n">kidsPop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">&lt;</span><span class="n">NUMPOP</span><span class="o">-</span><span class="nb">size</span><span class="p">(</span><span class="n">parentsPop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-        <span class="c">%选择出交叉的父代和母代</span>
-        <span class="n">father</span> <span class="p">=</span> <span class="n">parentsPop</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="nb">ceil</span><span class="p">((</span><span class="nb">size</span><span class="p">(</span><span class="n">parentsPop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nb">rand</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">};</span>
-        <span class="n">mother</span> <span class="p">=</span> <span class="n">parentsPop</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="nb">ceil</span><span class="p">((</span><span class="nb">size</span><span class="p">(</span><span class="n">parentsPop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nb">rand</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">};</span>
-        <span class="c">%随机产生交叉位置</span>
-        <span class="n">crossLocation</span> <span class="p">=</span> <span class="nb">ceil</span><span class="p">((</span><span class="nb">length</span><span class="p">(</span><span class="n">father</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nb">rand</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-        <span class="c">%如果随即数比交叉率低，就杂交</span>
+        <span class="c1">%选择出交叉的父代和母代</span>
+        <span class="n">father</span> <span class="o">=</span> <span class="n">parentsPop</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="nb">ceil</span><span class="p">((</span><span class="nb">size</span><span class="p">(</span><span class="n">parentsPop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nb">rand</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">};</span>
+        <span class="n">mother</span> <span class="o">=</span> <span class="n">parentsPop</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="nb">ceil</span><span class="p">((</span><span class="nb">size</span><span class="p">(</span><span class="n">parentsPop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nb">rand</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">};</span>
+        <span class="c1">%随机产生交叉位置</span>
+        <span class="n">crossLocation</span> <span class="o">=</span> <span class="nb">ceil</span><span class="p">((</span><span class="nb">length</span><span class="p">(</span><span class="n">father</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nb">rand</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+        <span class="c1">%如果随即数比交叉率低，就杂交</span>
         <span class="k">if</span> <span class="nb">rand</span><span class="o">&lt;</span><span class="n">CROSSOVERRATE</span>
-            <span class="n">father</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">crossLocation</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="p">=</span> <span class="n">mother</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">crossLocation</span><span class="p">:</span><span class="k">end</span><span class="p">);</span>
-            <span class="n">kidsPop</span><span class="p">{</span><span class="n">n</span><span class="p">}</span> <span class="p">=</span> <span class="n">father</span><span class="p">;</span>
-            <span class="n">n</span> <span class="p">=</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">father</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">crossLocation</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="o">=</span> <span class="n">mother</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">crossLocation</span><span class="p">:</span><span class="k">end</span><span class="p">);</span>
+            <span class="n">kidsPop</span><span class="p">{</span><span class="n">n</span><span class="p">}</span> <span class="o">=</span> <span class="n">father</span><span class="p">;</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
         <span class="k">end</span>
     <span class="k">end</span></code></pre></figure>
 
@@ -216,15 +216,15 @@
 <p>我们通过随机某位取反，完成变异操作。
 程序如下：</p>
 
-<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>kidsPop <span class="p">=</span><span class="w"> </span><span class="nf">Variation</span><span class="p">(</span>kidsPop,VARIATIONRATE<span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span> <span class="n">n</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">kidsPop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span> <span class="n">kidsPop</span> <span class="o">=</span> <span class="n">Variation</span><span class="p">(</span><span class="n">kidsPop</span><span class="p">,</span><span class="n">VARIATIONRATE</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">kidsPop</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">rand</span><span class="o">&lt;</span><span class="n">VARIATIONRATE</span>
-            <span class="n">temp</span> <span class="p">=</span> <span class="n">kidsPop</span><span class="p">{</span><span class="n">n</span><span class="p">};</span>
-            <span class="c">%找到变异位置</span>
-            <span class="n">location</span> <span class="p">=</span> <span class="nb">ceil</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span><span class="o">*</span><span class="nb">rand</span><span class="p">);</span>
-            <span class="n">temp</span> <span class="p">=</span> <span class="p">[</span><span class="n">temp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">location</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">num2str</span><span class="p">(</span><span class="o">~</span><span class="n">temp</span><span class="p">(</span><span class="n">location</span><span class="p">))</span><span class="c">...</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">kidsPop</span><span class="p">{</span><span class="n">n</span><span class="p">};</span>
+            <span class="c1">%找到变异位置</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="nb">ceil</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span><span class="o">*</span><span class="nb">rand</span><span class="p">);</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="n">temp</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">location</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="nb">num2str</span><span class="p">(</span><span class="o">~</span><span class="n">temp</span><span class="p">(</span><span class="n">location</span><span class="p">))</span><span class="k">...</span>
                 <span class="n">temp</span><span class="p">(</span><span class="n">location</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="p">)];</span>
-           <span class="n">kidsPop</span><span class="p">{</span><span class="n">n</span><span class="p">}</span> <span class="p">=</span> <span class="n">temp</span><span class="p">;</span>
+           <span class="n">kidsPop</span><span class="p">{</span><span class="n">n</span><span class="p">}</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
         <span class="k">end</span>
     <span class="k">end</span></code></pre></figure>
 

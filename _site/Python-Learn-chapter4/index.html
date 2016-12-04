@@ -150,14 +150,14 @@
   <li>Example:</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">S</span> <span class="o">=</span> <span class="s">&#39;spam&#39;</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">S</span> <span class="o">=</span> <span class="s">'spam'</span>
 <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="c"># 4</span>
-<span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c"># &#39;s&#39;</span>
-<span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c"># &#39;p&#39;</span>
-<span class="n">S</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c"># &#39;m&#39;</span></code></pre></figure>
+<span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c"># 's'</span>
+<span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c"># 'p'</span>
+<span class="n">S</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c"># 'm'</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">S</span> <span class="o">=</span> <span class="s">&#39;spam&#39;</span>
-<span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="c"># &#39;pa&#39;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">S</span> <span class="o">=</span> <span class="s">'spam'</span>
+<span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="c"># 'pa'</span></code></pre></figure>
 
 <h3 id="不可变性">不可变性</h3>
 
@@ -171,14 +171,14 @@
   <li>find方法：字符串查找（返回传入字符串的偏移量，没有返回-1）；replace方法：对全局进行搜索和替换</li>
   <li>split方法：分割字符串；upper方法：大小写变换；isalpha方法：测试字符串的内容；strip方法：去掉头尾的空格；rstrip方法：去掉字符串后面的空格</li>
   <li>字符串方法调用：
-<code>'%s, eggs, and %s' % ('spam', 'SPAM') # 'spam, eggs, and SPAM!'</code>或<code>'{0}, eggs, and {1}'.format('spam', 'SPAM!') # 'spam, eggs, and SPAM!'</code></li>
+<code class="highlighter-rouge">'%s, eggs, and %s' % ('spam', 'SPAM') # 'spam, eggs, and SPAM!'</code>或<code class="highlighter-rouge">'{0}, eggs, and {1}'.format('spam', 'SPAM!') # 'spam, eggs, and SPAM!'</code></li>
   <li>Example：</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">S</span> <span class="o">=</span> <span class="s">&#39;Spam&#39;</span>
-<span class="n">S</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;pa&#39;</span><span class="p">)</span> <span class="c"># 1</span>
-<span class="n">S</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;pa&#39;</span><span class="p">,</span> <span class="s">&#39;XYZ&#39;</span><span class="p">)</span> <span class="c"># &#39;SXYZm&#39;</span>
-<span class="n">S</span> <span class="c"># &#39;Spam&#39;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">S</span> <span class="o">=</span> <span class="s">'Spam'</span>
+<span class="n">S</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'pa'</span><span class="p">)</span> <span class="c"># 1</span>
+<span class="n">S</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'pa'</span><span class="p">,</span> <span class="s">'XYZ'</span><span class="p">)</span> <span class="c"># 'SXYZm'</span>
+<span class="n">S</span> <span class="c"># 'Spam'</span></code></pre></figure>
 
 <h3 id="编写字符串的其他方法">编写字符串的其他方法</h3>
 
@@ -215,8 +215,8 @@
 <h3 id="列表解析">列表解析</h3>
 
 <ul>
-  <li>列表解析式：<code>[row[1] + 1 for row in M]</code>或<code>[row[1] for row in M if row[1] % 2 == 0]</code>，后面一个使用if表达式，通过%求余表达式过滤结果重的奇数</li>
-  <li>解析语法也可以创建集合和字典：<code>{sum(row) for row in M}</code>和<code>{i: sum(M[i]) for i in range(3)}</code></li>
+  <li>列表解析式：<code class="highlighter-rouge">[row[1] + 1 for row in M]</code>或<code class="highlighter-rouge">[row[1] for row in M if row[1] % 2 == 0]</code>，后面一个使用if表达式，通过%求余表达式过滤结果重的奇数</li>
+  <li>解析语法也可以创建集合和字典：<code class="highlighter-rouge"><span class="p">{</span><span class="err">sum(row)</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">row</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">M</span><span class="p">}</span></code>和<code class="highlighter-rouge"><span class="p">{</span><span class="err">i:</span><span class="w"> </span><span class="err">sum(M[i])</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">i</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">range(3)</span><span class="p">}</span></code></li>
 </ul>
 
 <h3 id="重访嵌套">重访嵌套</h3>
@@ -225,7 +225,7 @@
   <li>python对象嵌套：</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">rec</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;first&#39;</span><span class="p">:</span> <span class="s">&#39;Bob&#39;</span><span class="p">,</span> <span class="s">&#39;last&#39;</span><span class="p">:</span> <span class="s">&#39;Smith&#39;</span><span class="p">},</span> <span class="s">&#39;job&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;dev&#39;</span><span class="p">,</span> <span class="s">&#39;mgr&#39;</span><span class="p">],</span> <span class="s">&#39;age&#39;</span><span class="p">:</span> <span class="mf">40.5</span><span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">rec</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="p">{</span><span class="s">'first'</span><span class="p">:</span> <span class="s">'Bob'</span><span class="p">,</span> <span class="s">'last'</span><span class="p">:</span> <span class="s">'Smith'</span><span class="p">},</span> <span class="s">'job'</span><span class="p">:</span> <span class="p">[</span><span class="s">'dev'</span><span class="p">,</span> <span class="s">'mgr'</span><span class="p">],</span> <span class="s">'age'</span><span class="p">:</span> <span class="mf">40.5</span><span class="p">}</span></code></pre></figure>
 
 <p>python具有一种垃圾收集的特性，一旦最后一次被移除，空间会立即回收</p>
 
@@ -237,7 +237,7 @@
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="k">while</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-	<span class="k">print</span><span class="p">(</span><span class="s">&#39;spam!&#39;</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">'spam!'</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
 	<span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span></code></pre></figure>
 
 <h3 id="迭代和优化">迭代和优化</h3>
@@ -270,11 +270,11 @@
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">([]):</span>
-	<span class="k">print</span><span class="p">(</span><span class="s">&#39;yes&#39;</span><span class="p">)</span> <span class="c"># yes</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">'yes'</span><span class="p">)</span> <span class="c"># yes</span>
 <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
-	<span class="k">print</span><span class="p">(</span><span class="s">&#39;yes&#39;</span><span class="p">)</span> <span class="c"># yes</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">'yes'</span><span class="p">)</span> <span class="c"># yes</span>
 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-	<span class="k">print</span><span class="p">(</span><span class="s">&#39;yes&#39;</span><span class="p">)</span> <span class="c"># yes</span></code></pre></figure>
+	<span class="k">print</span><span class="p">(</span><span class="s">'yes'</span><span class="p">)</span> <span class="c"># yes</span></code></pre></figure>
 
 
 </section>

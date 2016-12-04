@@ -72,7 +72,7 @@
 <h3 id="原处修改列表">原处修改列表</h3>
 
 <ul>
-  <li><code>L[1:2]=[4,5]</code>实际上，python会先删除位置1的数据，然后在删除的地方插入[4,5]。所以，<code>L[1:2]=[]</code>实际是删除操作。</li>
+  <li><code class="highlighter-rouge">L[1:2]=[4,5]</code>实际上，python会先删除位置1的数据，然后在删除的地方插入[4,5]。所以，<code class="highlighter-rouge">L[1:2]=[]</code>实际是删除操作。</li>
   <li>列表pop方法和append方法联用，实现快速的后进先出（last-in-first-out）堆栈结构</li>
   <li>del语句在原处删除某项或某片段</li>
 </ul>
@@ -91,7 +91,7 @@
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">D</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">keyslist</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span> <span class="c"># 生成键，内容都为values</span>
 <span class="n">D</span> <span class="o">=</span> <span class="n">ditc</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keyslist</span><span class="p">,</span> <span class="n">valueslist</span><span class="p">))</span>
-<span class="s">&#39;a&#39;</span> <span class="ow">in</span> <span class="n">D</span> <span class="c"># 键是否在字典中</span>
+<span class="s">'a'</span> <span class="ow">in</span> <span class="n">D</span> <span class="c"># 键是否在字典中</span>
 <span class="n">D</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="c"># 返回可迭代的视图</span>
 <span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="c"># 返回可迭代的视图</span>
 <span class="n">D</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="c"># 返回可迭代的视图</span>
@@ -126,14 +126,14 @@
   <li>字典视图并非创建后不能改变——它可以动态反映在视图对象创建之后对字典的修改</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
 <span class="n">K</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 <span class="n">V</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">D</span><span class="p">)</span> <span class="c"># [&#39;b&#39;, &#39;c&#39;, &#39;a&#39;]</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">D</span><span class="p">)</span> <span class="c"># ['b', 'c', 'a']</span>
 <span class="nb">list</span><span class="p">(</span><span class="n">V</span><span class="p">)</span> <span class="c"># [2, 3, 1]</span>
-<span class="k">del</span> <span class="n">D</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span>
-<span class="n">D</span> <span class="c"># {&#39;c&#39;: 3, &#39;a&#39;: 1}</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="c"># [&#39;c&#39;, &#39;a&#39;]</span>
+<span class="k">del</span> <span class="n">D</span><span class="p">[</span><span class="s">'b'</span><span class="p">]</span>
+<span class="n">D</span> <span class="c"># {'c': 3, 'a': 1}</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="c"># ['c', 'a']</span>
 <span class="nb">list</span><span class="p">(</span><span class="n">V</span><span class="p">)</span> <span class="c"># [3, 1]</span></code></pre></figure>
 
 <ul>

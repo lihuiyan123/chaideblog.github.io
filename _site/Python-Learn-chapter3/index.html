@@ -86,18 +86,18 @@
   <li>流重定向：</li>
 </ul>
 
-<p><code>$ python script.py &gt; saveit.txt</code></p>
+<p><code class="highlighter-rouge">$ python script.py &gt; saveit.txt</code></p>
 
 <h3 id="unix可执行脚本">UNIX可执行脚本(#!)：</h3>
 
 <ul>
   <li>脚本的第一行以字符#！开始，后面紧跟python解释器的路径。</li>
-  <li>脚本文件往往告诉操作系统可以作为顶层程序执行，在UNIX上往往使用<code>chmod +x file.py</code></li>
+  <li>脚本文件往往告诉操作系统可以作为顶层程序执行，在UNIX上往往使用<code class="highlighter-rouge">chmod +x file.py</code></li>
   <li>Example:</li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/local/bin/python</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&#39;The Bright Side &#39;</span> <span class="o">+</span> <span class="s">&#39;of Life...&#39;</span><span class="p">)</span></code></pre></figure>
+<span class="k">print</span><span class="p">(</span><span class="s">'The Bright Side '</span> <span class="o">+</span> <span class="s">'of Life...'</span><span class="p">)</span></code></pre></figure>
 
 <p>注释：从技术上来说，第一行是python注释。这种情况下，操作系统使用它找到解释器来运行文件其他部分的程序代码</p>
 
@@ -108,7 +108,7 @@
 </ul>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/env python</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&#39;The Bright Side &#39;</span> <span class="o">+</span> <span class="s">&#39;of Life...&#39;</span><span class="p">)</span></code></pre></figure>
+<span class="k">print</span><span class="p">(</span><span class="s">'The Bright Side '</span> <span class="o">+</span> <span class="s">'of Life...'</span><span class="p">)</span></code></pre></figure>
 
 <p>注释：env程序可以通过系统的搜索路径的设置定位python解释器</p>
 
@@ -118,7 +118,7 @@
   <li>可选的接受字符串，这些字符串作为提示打印出来</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">input</span><span class="p">(</span><span class="s">&#39;Press Enter to exit&#39;</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">input</span><span class="p">(</span><span class="s">'Press Enter to exit'</span><span class="p">)</span></code></pre></figure>
 
 <ul>
   <li>以字符串的形式为脚本返回读入的文本</li>
@@ -130,7 +130,7 @@
   <li>在shell支持输入流的重定向</li>
 </ul>
 
-<p><code>$ python spam.py &lt; imput.txt</code></p>
+<p><code class="highlighter-rouge">$ python spam.py &lt; imput.txt</code></p>
 
 <h2 id="模块导入和重载">模块导入和重载</h2>
 
@@ -154,7 +154,7 @@
   <li>Example:</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">myfile</span> <span class="c"># myfile: title = &#39;The Meaning of Life&#39;</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">myfile</span> <span class="c"># myfile: title = 'The Meaning of Life'</span>
 <span class="k">print</span><span class="p">(</span><span class="n">myfile</span><span class="o">.</span><span class="n">title</span><span class="p">)</span></code></pre></figure>
 
 <p>注释：这里表达式代表了object.attribute的语法，可以从任何的object中取出任意的属性</p>
@@ -164,15 +164,15 @@
 treenames.py文件：</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="s">&#39;dead&#39;</span>
-<span class="n">b</span> <span class="o">=</span> <span class="s">&#39;parrot&#39;</span>
-<span class="n">c</span> <span class="o">=</span> <span class="s">&#39;sketch&#39;</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="s">'dead'</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s">'parrot'</span>
+<span class="n">c</span> <span class="o">=</span> <span class="s">'sketch'</span>
 <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">threenames</span> <span class="c"># dead parrot sketch</span>
-<span class="n">threenames</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="n">threenames</span><span class="o">.</span><span class="n">c</span> <span class="c"># (&#39;parrot&#39;, &#39;sketch&#39;)</span>
+<span class="n">threenames</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="n">threenames</span><span class="o">.</span><span class="n">c</span> <span class="c"># ('parrot', 'sketch')</span>
 <span class="kn">from</span> <span class="nn">threenames</span> <span class="kn">import</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span>
-<span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="c"># (&#39;parrot&#39;, &#39;sketch&#39;)</span></code></pre></figure>
+<span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="c"># ('parrot', 'sketch')</span></code></pre></figure>
 
 <p>注释：内置的dir函数可以获得模块内部的变量名列表，带下划线的是python预定义的内置变量名</p>
 
@@ -193,7 +193,7 @@ treenames.py文件：</li>
 <h2 id="使用exec运行模块文件">使用exec运行模块文件</h2>
 
 <ul>
-  <li><code>exec(open('module.py').read())</code>内置函数的调用，每次都运行运行文件的最新版本。与from一样，对当前的变量有潜在的默认覆盖的可能</li>
+  <li><code class="highlighter-rouge">exec(open('module.py').read())</code>内置函数的调用，每次都运行运行文件的最新版本。与from一样，对当前的变量有潜在的默认覆盖的可能</li>
 </ul>
 
 </section>

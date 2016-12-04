@@ -88,9 +88,9 @@
 
 <h3 id="文件">文件</h3>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">fileOut</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">r&#39;C:\spam&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="c"># w是写入</span>
-<span class="n">fileIn</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="c"># r是读</span>
-<span class="n">fileIn</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">)</span> <span class="c"># r是默认</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">fileOut</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">r'C:</span><span class="err">\</span><span class="s">spam'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="c"># w是写入</span>
+<span class="n">fileIn</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'data'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="c"># r是读</span>
+<span class="n">fileIn</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'data'</span><span class="p">)</span> <span class="c"># r是默认</span>
 <span class="n">aString</span> <span class="o">=</span> <span class="n">fileIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c"># 将文件读进单一字符串</span>
 <span class="n">aString</span> <span class="o">=</span> <span class="n">fileIn</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="c"># 读取文件后N个字节</span>
 <span class="n">aString</span> <span class="o">=</span> <span class="n">fileIn</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span> <span class="c"># 读取一行</span>
@@ -121,14 +121,14 @@
   <li>pickle模块能够在文件中储存几乎任何python对象的高级工具，并不要求我们把字符串转换来转换去</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-<span class="n">F</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;datafile.pkl&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">F</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'datafile.pkl'</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">F</span><span class="p">)</span>
 <span class="n">F</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pickle</span>
-<span class="n">F</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;datafile.pkl&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">F</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'datafile.pkl'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span>
 <span class="n">E</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">F</span><span class="p">)</span></code></pre></figure>
 
 <h3 id="文件上下文管理器">文件上下文管理器</h3>
@@ -159,7 +159,7 @@
 <ul>
   <li>在原处修改可变对象时可能会影响程序中其他地方对相同对象的其他引用</li>
   <li>引用时其他语言中指针的更高级模拟</li>
-  <li>如果需要一个深层嵌套的数据结构的完整的、独立的拷贝，使用标准的copy模块，<code>X = copy.deepcopy(Y)</code>。</li>
+  <li>如果需要一个深层嵌套的数据结构的完整的、独立的拷贝，使用标准的copy模块，<code class="highlighter-rouge">X = copy.deepcopy(Y)</code>。</li>
 </ul>
 
 <h3 id="比较想等性和真值">比较、想等性和真值</h3>
@@ -188,7 +188,7 @@
 <h3 id="type对象">type对象</h3>
 
 <ul>
-  <li><code>type(X)</code>可以返回对象X的类型对象</li>
+  <li><code class="highlighter-rouge">type(X)</code>可以返回对象X的类型对象</li>
   <li>dict、list、str、tuple、int、float、complex、byte、type、set、file</li>
   <li>python的类型还可以分为子类，一般建议使用isinstance技术</li>
 </ul>
@@ -204,12 +204,12 @@
 <h3 id="留意循环数据结构">留意循环数据结构</h3>
 
 <ul>
-  <li>一个复合对象包含指向自身的引用，称为循环对象。python在对象中检测到循环，会打印成<code>[...]</code>，而不会陷入无限循环</li>
+  <li>一个复合对象包含指向自身的引用，称为循环对象。python在对象中检测到循环，会打印成<code class="highlighter-rouge">[...]</code>，而不会陷入无限循环</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;grail&#39;</span><span class="p">]</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">'grail'</span><span class="p">]</span>
 <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
-<span class="n">L</span> <span class="c"># [&#39;grail&#39;, [...]]</span></code></pre></figure>
+<span class="n">L</span> <span class="c"># ['grail', [...]]</span></code></pre></figure>
 
 
 </section>
