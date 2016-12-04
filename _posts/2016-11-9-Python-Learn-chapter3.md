@@ -31,7 +31,7 @@ excerpt: python是一门脚本语言，文件被称为模块，模块是变量�
 * 脚本文件往往告诉操作系统可以作为顶层程序执行，在UNIX上往往使用`chmod +x file.py`
 * Example:
 
-{% highlight python3 %}
+{% highlight python %}
 #!/usr/local/bin/python
 print('The Bright Side ' + 'of Life...')
 {% endhighlight %}
@@ -42,7 +42,7 @@ print('The Bright Side ' + 'of Life...')
 
 * 一些UNIX系统可以避免硬编码python解释器的路径
 
-{% highlight python3 %}
+{% highlight python %}
 #!/usr/bin/env python
 print('The Bright Side ' + 'of Life...')
 {% endhighlight %}
@@ -53,13 +53,13 @@ print('The Bright Side ' + 'of Life...')
 
 * 可选的接受字符串，这些字符串作为提示打印出来
 
-{% highlight python3 %}
+{% highlight python %}
 input('Press Enter to exit')
 {% endhighlight %}
 
 * 以字符串的形式为脚本返回读入的文本
 
-{% highlight python3 %}
+{% highlight python %}
 nextinput = input()
 {% endhighlight %}
 
@@ -73,7 +73,7 @@ nextinput = input()
 * 第一次导入后，其他的导入不会再工作，甚至改变了源代码也不行
 * 如果想要再次运行文件，需要调用imp标准库中的reload函数
 
-{% highlight python3 %}
+{% highlight python %}
 from imp import reload
 reload(script1)
 {% endhighlight %}
@@ -87,7 +87,7 @@ reload(script1)
 * 导入者得到了模块文件中在顶层所定义的所有变量名
 * Example:
 
-{% highlight python3 %}
+{% highlight python %}
 import myfile # myfile: title = 'The Meaning of Life'
 print(myfile.title)
 {% endhighlight %}
@@ -97,14 +97,14 @@ print(myfile.title)
 * Example:
 treenames.py文件：
 
-{% highlight python3 %}
+{% highlight python %}
 a = 'dead'
 b = 'parrot'
 c = 'sketch'
 print(a, b, c)
 {% endhighlight %}
 
-{% highlight python3 %}
+{% highlight python %}
 import threenames # dead parrot sketch
 threenames.b, threenames.c # ('parrot', 'sketch')
 from threenames import a, b, c
