@@ -57,26 +57,51 @@
 <span class="tags">
   标签
   
-  <a href="/tags/#《机器学习（周志华）》" title="《机器学习（周志华）》">《机器学习（周志华）》</a>&nbsp;
+  <a href="/tags/#Decision" title="Decision">Decision</a>&nbsp;
+  
+  <a href="/tags/#Tree" title="Tree">Tree</a>&nbsp;
   
 </span>
 
 </section>
 <section class="post">
-<h2 id="决策树">决策树</h2>
+<h2 id="浅谈决策树在数据挖掘中的应用">浅谈决策树在数据挖掘中的应用</h2>
 
-<h3 id="41-基本流程">4.1 基本流程</h3>
-<p>顾名思义，决策树是基于树结构来进行决策的，是一种常见的机器学习方法。</p>
+<p>数据挖掘(KDD)可以产生五种基本类型的信息：(1)关联信息，若干个事情相关联的信息；(2)聚类信息，对数据进行聚类；(3)分类信息，进行分类的特征描述；(4)偏差信息，反应异常情况；(5)预测信息。</p>
+
+<p>数据挖掘中用于分类的算法很多，如决策树、贝叶斯分类、规则推理、遗传算法和神经网络。其中决策树的应用广泛，原因是：(1)决策树算法的复杂度小，速度快；(2)抗噪声能力强；(3)可伸缩性强，即可用于小数据集，也可用于海量数据集。</p>
+
+<h2 id="建树过程">建树过程</h2>
+
+<p>决策树算法的研究方向：(1)提高效率；(2)适应多数据类型、容噪；(3)可扩展性；(4)与其他技术相结合，如神经网络、模糊集理论、遗传算法。</p>
+
+<h3 id="概念学习系统cls">概念学习系统(CLS)</h3>
+
+<p>CLS的描述如下：</p>
+
+<ol>
+  <li>生成一颗空决策树和一张训练样本属性表；</li>
+  <li>if 样本都属于同一类</li>
+  <li> 生成结点T，结束；</li>
+  <li>else</li>
+  <li> 根据某种策略，从属性表中选出属性A，并产生结点A</li>
+  <li> 假定A的取值为<script type="math/tex">\{v_{1},v_{2},...,v_{m}\}</script>，根据A的取值，将T分为M个子集<script type="math/tex">\{T_{1},T_{2},...,T_{m}\}</script>；</li>
+  <li> 从训练样本属性表中删除属性A；</li>
+  <li>转步骤2，递归调用。</li>
+</ol>
+
+<h3 id="迭代分类器id3">迭代分类器(ID3)</h3>
+
+<p>ID3算法是决策树算法的代表。它采用分治策略，在决策树各级结点选择属性时，采用信息增益作为标准。</p>
 
 <p>一般的，一棵决策树包含一个根结点、若干个内部结点和若干个叶结点；叶结点对于<strong>决策</strong>结果，其他每个结点对应于一个<strong>属性</strong>测试；每个结点包含的样本集合根据属性测试的结果被划分到子结点中；根结点包含样本全集。从根结点到每个叶结点的<strong>路径</strong>对应了一个<strong>判定测试序列</strong>。</p>
 
-<p>决策树学习的目的是产生一棵泛化能力强的决策树，基本流程遵循简单且直观的“分而治之”策略。</p>
-
-<p>决策树学习基本算法：</p>
+<p>ID3基本算法：</p>
 
 <p>输入：训练集<script type="math/tex">D=\{(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{m},y_{m})\}</script>；属性集：<script type="math/tex">A=\{a_{1},a_{2},...,a_{d}\}</script>。</p>
 
-<p>过程：函数TreeGenerate(D, A)</p>
+<p>过程：函数ID3(D,A)</p>
+
 <ol>
   <li>生成结点node；</li>
   <li>if D中样本全属于同一类别C then</li>
@@ -91,7 +116,7 @@
   <li> if <script type="math/tex">D_{v}</script>为空 then</li>
   <li>  将分支结点标记为叶结点，其类别标记为D中样本最多的类；return</li>
   <li> else</li>
-  <li>  以<script type="math/tex">TreeGenerate(D_{v}, A - \{a_{*}\}</script>为分支结点</li>
+  <li>  以<script type="math/tex">ID3(D_{v},A - \{a_{*}\}</script>为分支结点</li>
   <li> end if</li>
   <li>end for</li>
 </ol>
@@ -103,6 +128,7 @@
 </ul>
 
 <p>显然，有三种情况会导致递归返回：</p>
+
 <ol>
   <li>当前结点包含的样本全属于同一类别，无需划分；</li>
   <li>当前属性集为空，或所有样本在所有属性上取值相同，无法划分；</li>
@@ -111,11 +137,7 @@
 
 <p>第2种情况，我们将当前结点标记为叶结点，并将其类别设定为该结点所含样本最多的类别；第3种情况，同样将当前结点标记为叶结点，但将其类别设定为其父结点所含样本最多的类别。</p>
 
-<h3 id="42-划分选择">4.2 划分选择</h3>
-
 <p>决策树算法最关键的是第8行，即如何选择最优划分属性。我们一般希望决策树的分支结点所包含的样本属于同一类别，即结点的“纯度”越来越高。</p>
-
-<h4 id="421-信息增益">4.2.1 信息增益</h4>
 
 <p><strong>信息熵</strong>是度量样本集合纯度最常用的一种指标。假设当前样本集合D中第k类样本所占的比例为
 <script type="math/tex">p_{k}(k=1,2,...,|y|)</script>
@@ -133,19 +155,15 @@
 
 <p>一般，信息增益越大，意味着使用属性a来进行划分得到的<strong>纯度提升</strong>越大。因此，我们选择属性<script type="math/tex">a_{*}=\arg\ \max \limits_{a \in A} Gain(D,a)</script>。著名的ID3算法就是通过信息增益来选择划分属性的。</p>
 
-<h4 id="422-增益率">4.2.2 增益率</h4>
+<h3 id="aclsid3cls">ACLS：ID3+CLS</h3>
 
-<p>信息增益准则对可取值数目较多的属性有偏好，为减少这种偏好带来的不利影响，著名的C4.5决策树算法采用<strong>增益率</strong>来选择最优属性。增益率定义为</p>
+<p>主要改进：运行属性取任意的整数值，极大的扩展了决策树算法的应用范围，使决策树可以处理一些比较复杂的任务，比如图像处理。</p>
 
-<script type="math/tex; mode=display">Gain\_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}</script>
+<h3 id="cart">CART</h3>
 
-<p>其中，
-<script type="math/tex">IV(a)=-\sum^{V}_{v=1}\frac{|D^{v}|}{|D|}log_{2}\frac{|D^{v}|}{|D|}</script>
-称为属性a的<strong>固有值</strong>。属性a的可能取值越多，<script type="math/tex">IV(a)</script>越大。</p>
+<p>采用基尼系数作为选择属性的依据，最终生成二叉树。再利用重采样技术进行误差估计和基于最小代价复杂性的树剪枝。</p>
 
-<p><strong>增益率对取值数目较小的属性有偏好。</strong></p>
-
-<h4 id="423-基尼系数">4.2.3 基尼系数</h4>
+<p>由于生成决策树的训练集一般都存在噪声数据，噪声数据会造成决策树过于复杂，决策树剪枝方法的出现极大改善了性能。剪枝方法有：最小错误率剪枝(MEP)、临界值剪枝(CVP)、减少错误剪枝(REP)。</p>
 
 <p>CART决策树通过<strong>基尼系数</strong>来选择划分属性，数据Ｄ的基尼值为：</p>
 
@@ -159,40 +177,25 @@
 <script type="math/tex">a_{*}=\arg\ \max \limits_{a \in A} Gini\_index(D,a)</script>
 。</p>
 
-<h3 id="43-剪枝处理">4.3 剪枝处理</h3>
+<h3 id="relief">RELIEF</h3>
 
-<p>剪枝是决策树学习算法对付<strong>过拟合</strong>的主要手段。决策树剪枝的基本策略有<strong>预剪枝</strong>和<strong>后剪枝</strong>。</p>
+<p>考虑“邻居”实例，把数据集中的局部信息引入到决策树算法中。局部信息的优势在于它能够在其他属性的背景下评估每一个属性，此前的决策树算法都只能单独的评估每一个属性，忽略的属性间的关联。</p>
 
-<p>预剪枝是在决策树生成过程中，对每个结点在划分前进行估计，当前结点的划分不能带来决策树泛化性能提升，则停止划分斌将当前结点标记为叶结点。后剪枝是从训练集生成的一颗完整的决策书，自底向上对非叶结点进行考察，若该结点对应的子树替换为叶结点能带来决策树泛化能力的提高，则将该子树替换为叶结点。</p>
+<h3 id="c45">C4.5</h3>
 
-<h4 id="431-预剪枝">4.3.1 预剪枝</h4>
+<p>采用信息增益率来选择属性，同时可以处理连续值属性的数据。还可以用于增量式学习，随着数据量的增加动态地调整决策树。</p>
 
-<p>预剪枝的算法：</p>
+<h4 id="信息增益率">信息增益率</h4>
 
-<p>输入：训练集<script type="math/tex">D=\{(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{m},y_{m})\}</script>；属性集：<script type="math/tex">A=\{a_{1},a_{2},...,a_{d}\}</script>；验证集：<script type="math/tex">T=\{(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{n},y_{n})\}</script>。</p>
+<p>信息增益准则对可取值数目较多的属性有偏好，为减少这种偏好带来的不利影响，著名的C4.5决策树算法采用<strong>增益率</strong>来选择最优属性。增益率定义为</p>
 
-<p>过程：函数pre_TreeCut(D,T,A)</p>
+<script type="math/tex; mode=display">Gain\_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}</script>
 
-<ol>
-  <li>根据信息增益或增益率，选择属性<script type="math/tex">a_{*}</script></li>
-  <li>if 划分后验证集精度提升 then</li>
-  <li> 可以划分；对该结点调用<script type="math/tex">pre\_TreeCut(D,T,A - \{ a_{*} \})</script></li>
-  <li>else</li>
-  <li> 将该结点定义为叶结点；return</li>
-  <li>end if</li>
-</ol>
+<p>其中，
+<script type="math/tex">IV(a)=-\sum^{V}_{v=1}\frac{|D^{v}|}{|D|}log_{2}\frac{|D^{v}|}{|D|}</script>
+称为属性a的<strong>固有值</strong>。属性a的可能取值越多，<script type="math/tex">IV(a)</script>越大。</p>
 
-<p>预剪枝基于<strong>贪心</strong>本质禁止这些分支展开，给预剪枝决策树带来了<strong>欠拟合</strong>的风险。</p>
-
-<h4 id="432-后剪枝">4.3.2 后剪枝</h4>
-
-<p>后剪枝先从训练集中生成一颗完整的决策树。然后，自底向上依次判断剪枝是否会提高验证集精度。若提高，则进行剪枝；若下降，则不剪枝；若不变，根据奥卡姆剃刀准则，剪枝。</p>
-
-<p>一般，后剪枝决策树的<strong>欠拟合</strong>风险很小，泛化性能优于预剪枝决策树；但是后剪枝的<strong>训练时间</strong>比预剪枝大得多。</p>
-
-<h3 id="44-连续与缺失值">4.4 连续与缺失值</h3>
-
-<h4 id="441-连续值处理">4.4.1 连续值处理</h4>
+<p><strong>增益率对取值数目较小的属性有偏好。</strong></p>
 
 <p>对给定样本集D和连续属性a，假定a在D上出现了n个不同的取值，将这些取值从小到大排序，记为<script type="math/tex">\{a_{1},a_{2},...,a_{n}\}</script>。基于划分点t可以将D分为子集<script type="math/tex">D_{t}^{-}</script>和<script type="math/tex">D_{t}^{+}</script>，其中<script type="math/tex">D_{t}^{-}</script>包含属性a上不大于t的样本，<script type="math/tex">D_{t}^{+}</script>包含属性a上大于t的样本。显然，对于相邻属性<script type="math/tex">a^{i}</script>和<script type="math/tex">a^{i+1}</script>来说，t在区间<script type="math/tex">[a^{i},a^{i+1}]</script>取任意值所产生的划分结果相同。因此对连续属性a，考察包含n-1个元素的划分点集：</p>
 
@@ -204,7 +207,7 @@
 
 <p>选择出最大的信息增益点后，找出对应的划分点。</p>
 
-<h4 id="442-缺失值处理">4.4.2 缺失值处理</h4>
+<h4 id="缺失值处理">缺失值处理</h4>
 
 <p>利用有缺失属性值的训练样例来学习，需要解决两个问题：（1）如何在属性值缺失的情况下进行划分属性选择？（2）给定划分属性，若样本在该属性上的值缺失，如何对样本进行划分？</p>
 
@@ -236,11 +239,108 @@
 
 <p>对于问题（2），若样本x在划分属性a上的取值已知，则将x划入相应的子结点，且样本权重保持为<script type="math/tex">\omega_{x}</script>。若样本x在划分属性a上的取值未知，则将x同时划入所有子结点，且样本权重与属性值<script type="math/tex">a^{v}</script>对应的子结点中调整为<script type="math/tex">\tilde{r}_{v} \cdot \omega_{x}</script>。</p>
 
-<h3 id="45-多变量决策树">4.5 多变量决策树</h3>
+<h3 id="sliq">SLIQ</h3>
+
+<p>高速、可伸缩、有监督的寻找学习。针对数据量远大于内存的情况，采用了类表、属性表和类直方图三种数据结构，利用换入换出策略处理大数据量。</p>
+
+<h3 id="sprint">SPRINT</h3>
+
+<p>可伸缩、并行、归纳决策树。可以避免内存空间的限制，利用多个并行处理器构造一个稳定的、分类准确率很高的决策树。具有很好的可伸缩性，扩容性。但是结点分割处理过程复杂和储存复杂。</p>
+
+<h3 id="public">PUBLIC</h3>
+
+<p>将建树和修剪相结合。主要思想：在决策树建立时，计算每个结点的目标函数值，估计该结点在未来是否会被删除。</p>
+
+<h3 id="雨林分类法">雨林分类法</h3>
+
+<p>针对大数据量，快速构造决策树的分类框架。核心思想：根据每次计算时可用的内存空间，合理调整每次计算的数据集大小，尽量利用内存资源。</p>
+
+<h3 id="ec45">EC4.5</h3>
+
+<p>采用二分搜索代替线性搜索，同时提出多种寻找连续值的局部阈值的策略。</p>
+
+<h3 id="软决策树">软决策树</h3>
+
+<p>综合决策树的生成和修剪来决定本身的结构，并利用重修和磨合来提高归纳能力。</p>
+
+<h3 id="多变量决策树">多变量决策树</h3>
 
 <p>决策树所形成的分类边界有一个明显的特点：轴平行，即它的分类边界有若干个与坐标轴平行的分段组成。在学习任务的真实分类边界复杂时，决策树会十分复杂，时间开销会很大。</p>
 
 <p>多变量决策树可以大大简化决策树模型。例如斜划分的多变量决策树中，非叶结点不再是针对有个属性，而是对属性的线性组合，形成一个形如<script type="math/tex">\sum_{i=1}^{d} \omega_{i}a_{i}=t</script>的线性分类器。</p>
+
+<h2 id="剪枝处理">剪枝处理</h2>
+
+<p>剪枝是决策树学习算法对付<strong>过拟合</strong>的主要手段。决策树剪枝的基本策略有<strong>预剪枝</strong>和<strong>后剪枝</strong>。</p>
+
+<p>预剪枝是在决策树生成过程中，对每个结点在划分前进行估计，当前结点的划分不能带来决策树泛化性能提升，则停止划分斌将当前结点标记为叶结点。后剪枝是从训练集生成的一颗完整的决策书，自底向上对非叶结点进行考察，若该结点对应的子树替换为叶结点能带来决策树泛化能力的提高，则将该子树替换为叶结点。</p>
+
+<h3 id="预剪枝">预剪枝</h3>
+
+<p>预剪枝的算法：</p>
+
+<p>输入：训练集<script type="math/tex">D=\{(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{m},y_{m})\}</script>；属性集：<script type="math/tex">A=\{a_{1},a_{2},...,a_{d}\}</script>；验证集：<script type="math/tex">T=\{(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{n},y_{n})\}</script>。</p>
+
+<p>过程：函数pre_TreeCut(D,T,A)</p>
+
+<ol>
+  <li>
+    <p>根据信息增益或增益率，选择属性<script type="math/tex">a_{*}</script></p>
+  </li>
+  <li>
+    <p>if 划分后验证集精度提升 then</p>
+  </li>
+  <li>
+    <p> 可以划分；对该结点调用<script type="math/tex">pre\_TreeCut(D,T,A - \{ a_{*} \})</script></p>
+  </li>
+  <li>
+    <p>else</p>
+  </li>
+  <li>
+    <p> 将该结点定义为叶结点；return</p>
+  </li>
+  <li>
+    <p>end if</p>
+  </li>
+</ol>
+
+<p>预剪枝基于<strong>贪心</strong>本质禁止这些分支展开，给预剪枝决策树带来了<strong>欠拟合</strong>的风险。预剪枝的缺点是不能处理数量较小的特殊情况实例；还有视野效果问题，就是在相同的标准下，当前的扩展不能满足要求，但进一步的扩展可以满足要求。</p>
+
+<h3 id="后剪枝">后剪枝</h3>
+
+<p>一般，后剪枝决策树的<strong>欠拟合</strong>风险很小，泛化性能优于预剪枝决策树；但是后剪枝的<strong>训练时间</strong>比预剪枝大得多。</p>
+
+<h4 id="rep方法">REP方法</h4>
+
+<p>自底而上，对于树T的每一个子树S，使它成为叶结点，生成一颗新树。在测试集上，新树可以得到一个较小或相等的分类错误，则S删除。</p>
+
+<p>REP方法是线性的，但偏向过度修剪，当训练数据集较小，不建议使用。</p>
+
+<h4 id="pep方法">PEP方法</h4>
+
+<p>为了克服REP方法需要独立剪枝数据集的缺点设计的。</p>
+
+<p>假设训练集生成树T，叶结点的实例个数为<script type="math/tex">n(T)</script>，其中错误分类个数<script type="math/tex">e(T)</script>，误差率<script type="math/tex">r(T)=\frac{e(T)}{n(T)}</script>。对误差估计增加了连续性校正<script type="math/tex">r^{'}(T)=\frac{e(T)+\frac{1}{2}}{n(T)}</script>。</p>
+
+<p>设<script type="math/tex">T_{s}</script>为树T的子树，其叶结点的个数为<script type="math/tex">L(</script>T_{s}<script type="math/tex">)</script>；s是树<script type="math/tex">T_{s}</script>替换后的叶结点。<script type="math/tex">T_{s}</script>的分类误差为：</p>
+
+<script type="math/tex; mode=display">r^{'}(T_{s})=\frac{\sum \limits{T_{s}} [e(T_{s})+\frac{1}{2}]}{\sum \limits{T_{s}} n(T_{s})} = \frac{\sum e(T_{s})+\frac{L(T_{s})}{2}}{\sum n(T_{s})}</script>
+
+<p>令<script type="math/tex">e^{'}(T_{s})=\sum e(T_{s}) + \frac{L(T_{s})}{2}</script></p>
+
+<p>一般，结点s别叶结点替换的条件是：子树S的误差率大于替换后结点s的误差率。</p>
+
+<p>削弱对错误率的限制，修改为：</p>
+
+<script type="math/tex; mode=display">e^{'}(s) \leq e^{'}(T_{s}) + SE[e^{'}(T_{s})]</script>
+
+<p>其中，<script type="math/tex">SE[e^{'}(T_{s})]</script>称为标准误差，定义：</p>
+
+<script type="math/tex; mode=display">SE[e^{'}(T_{s})] = \sqrt{\frac{e^{'}(T_{s})[n(s)-e^{'}(T_{s})]}{n(s)}}</script>
+
+<p>如果上式成立，则子树<script type="math/tex">T_{s}</script>应被修剪掉。</p>
+
+<h4 id="mep方法">MEP方法</h4>
 
 </section>
 <section align="right">
