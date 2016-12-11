@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "机器学习笔记——概念和基础知识"
-categories: 机器学习
-tags: "Machine\ Learning"
+categories: "Machine&#160Learning"
+tags: "Fundamental"
 excerpt: 机器学习包括符号学习和统计学习等方式。机器学习模型的评估和选择。
 ---
 

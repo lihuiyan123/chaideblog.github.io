@@ -48,7 +48,7 @@
 <span class="categories">
   分类
   
-  <a href="/categories/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  <a href="/categories/#Machine&#160Learning" title="Machine&#160Learning">Machine&#160Learning</a>&nbsp;
   
 </span>
 
@@ -57,9 +57,7 @@
 <span class="tags">
   标签
   
-  <a href="/tags/#Decision" title="Decision">Decision</a>&nbsp;
-  
-  <a href="/tags/#Tree" title="Tree">Tree</a>&nbsp;
+  <a href="/tags/#Decision&#160Tree" title="Decision&#160Tree">Decision&#160Tree</a>&nbsp;
   
 </span>
 
@@ -342,13 +340,25 @@
 
 <h4 id="mep方法">MEP方法</h4>
 
+<p>假设训练集的类别总数为k，对于书中的当前非叶子结点t，所包含的样本数<script type="math/tex">N(t)</script>，属于主导类i的样本个数为<script type="math/tex">N_{i}(t)</script>，不属于主导类的样本数为<script type="math/tex">E(t)</script>，显然<script type="math/tex">E(t)=N(t)-N_{i}(t)</script>。结点t中某一样本实例属于类i的期望概率为</p>
+
+<script type="math/tex; mode=display">P_{i}(t)=\frac{N_{i}(t)+P_{ki}*m}{N(t)+m}</script>
+
+<p>其中，<script type="math/tex">P_{ki}</script>表示第i类的先验概率，m是参数，用来设置先验概率在评估<script type="math/tex">P_{i}(t)</script>中的权值。</p>
+
+<p>如果当前结点t标示为类i的叶结点，那么分类误差期望概率为：</p>
+
+<script type="math/tex; mode=display">EER(t)=min{1-P_{i}(t)}=min{\frac{N(t)-N_{i}(t)+m \cdot (1-P_{ki})}{N(t)+m}}</script>
+
+<p>对于非叶结点t，假设t的子结点<script type="math/tex">t_{1},t_{2},...,t_{m}</script>，首先计算该结点t的误差，称为静态误差<script type="math/tex">STE(t)</script>，然后计算这m个分支的误差，并且加权求和，权值为每个分支拥有的训练样本比例。我们称加权后的误差为回溯误差<script type="math/tex">DYE(t)</script>。如果<script type="math/tex">STE(t) \leq DYE(t)</script>，则对结点t的子树进行修剪。</p>
+
 </section>
 <section align="right">
 <br/>
 <span>
 	<a  href="/Python-Learn-chapter9/" class="pageNav"  >上一篇</a>
 	&nbsp;&nbsp;&nbsp;
-	<a   class="pageNavInvalid"  >下一篇</a>
+	<a  href="/Decision-Tree-ID3/" class="pageNav"  >下一篇</a>
 </span>
 </section>
 

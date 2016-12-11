@@ -2,7 +2,7 @@
 layout: post
 title:  遗传算法讲解（Matlab描述）
 categories: Algorithm
-tags: 遗传算法
+tags: "Genetic&#160Algorithm"
 excerpt: 遗传算法（Genetic Algorithm）是模拟达尔文生物进化论的自然选择和遗传学机理的生物进化过程的计算模型。
 ---
 

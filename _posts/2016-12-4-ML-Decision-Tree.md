@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "机器学习笔记——决策树"
-categories: 机器学习
-tags: "Decision Tree"
+categories: "Machine&#160Learning"
+tags: "Decision&#160Tree"
 excerpt: 决策树是基于树结构来进行决策的，是一种常见的机器学习方法。
 ---
 

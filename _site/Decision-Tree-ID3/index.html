@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+	<head>
+		<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="author" content="CHAI" />
+		<title>
+			
+				
+				决策树——ID3算法
+			
+		</title>
+
+		<link rel="shortcut icon" href="/image/favicon.ico" />
+		<link href="/feed/" rel="alternate" title="CHAI" type="application/atom+xml" />
+		<link rel="stylesheet" href="/media/css/style.css" />
+		<link rel="stylesheet" href="/media/css/highlight.css" />
+		<script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+	</head>
+
+	<body>
+		<div id="container">
+		<div id="main" role="main">
+
+		<header>
+			<h1>
+				决策树——ID3算法
+			</h1>
+		</header>
+
+		<nav>
+			<span><a title="网站首页" class="" href="/">首页</a></span>
+			<span><a title="文章分类" class="" href="/categories/">分类</a></span>
+			<span><a title="标签索引" class="" href="/tags/">标签</a></span>
+			<span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+			<span><a title="关于站长" class="" href="/about/">关于</a></span>
+        </nav>
+
+        <article class="content">
+			<section class="meta">
+<span class="time">
+    <time datetime="2016-12-11">2016-12-11</time>
+</span>
+
+ |
+<span class="categories">
+  分类
+  
+  <a href="/categories/#Machine&#160Learning" title="Machine&#160Learning">Machine&#160Learning</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  标签
+  
+  <a href="/tags/#Decision&#160Tree" title="Decision&#160Tree">Decision&#160Tree</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="id3算法的基本理论">ID3算法的基本理论</h2>
+
+<p>ID3算法是基于奥卡姆剃刀原理（<a href="http://localhost:4000/ML-Concept-and-Fundamentals/index.html#14-归纳偏好" target="_blank">奥卡姆剃刀原理</a>）的一种决策树算法。具体原理在“<a href="http://localhost:4000/ML-Decision-Tree/index.html#迭代分类器id3" target="_blank">机器学习笔记——决策树</a>”一文中有详细介绍。</p>
+
+<h2 id="id3算法的python实现">ID3算法的Python实现</h2>
+
+<p>实际上，在python实现之前，我首先使用Matlab来尝试实现ID3算法的。主要原因是：(1)我研究生的研究工作主要使用Matlab；(2)我使用过Matlab实现过一些算法和论文，有一定经验。但是，事实证明我还是too young too simple。首先，Matlab在树的数据结构表达上比较复杂，不利于数据的表达和搜索；其次，Matlab主要在矩阵运算方面发挥优势，而在递归和迭代方面，不如c、python等语言优化的好。当然，之后我还是会使用Matlab重新实现一次ID3算法的。</p>
+
+<h3 id="训练集">训练集</h3>
+
+<p>关于ID3算法的训练集上，我找了找UCI的<a href="https://archive.ics.uci.edu/ml/index.html" target="_blank">Machine Learning Repository</a>，并没有找到合适的。（希望有相关数据的可以email给我）最终，我从一些bolg上发现了一组数据，用来训练我的ID3算法。</p>
+
+<p>这组数据包含了14天的气象数据(outlook、temperature、humidity、windy)，并根据这些天气决定是否出去玩(play)。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">outlook</th>
+      <th style="text-align: center">temperature</th>
+      <th style="text-align: center">humidity</th>
+      <th style="text-align: center">windy</th>
+      <th style="text-align: center">play</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">sunny</td>
+      <td style="text-align: center">hot</td>
+      <td style="text-align: center">high</td>
+      <td style="text-align: center">false</td>
+      <td style="text-align: center">no</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sunny</td>
+      <td style="text-align: center">hot</td>
+      <td style="text-align: center">high</td>
+      <td style="text-align: center">true</td>
+      <td style="text-align: center">no</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">overcast</td>
+      <td style="text-align: center">hot</td>
+      <td style="text-align: center">high</td>
+      <td style="text-align: center">false</td>
+      <td style="text-align: center">yes</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">rain</td>
+      <td style="text-align: center">mild</td>
+      <td style="text-align: center">high</td>
+      <td style="text-align: center">false</td>
+      <td style="text-align: center">yes</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">rain</td>
+      <td style="text-align: center">cool</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">false</td>
+      <td style="text-align: center">yes</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">rain</td>
+      <td style="text-align: center">cool</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">true</td>
+      <td style="text-align: center">no</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">overcast</td>
+      <td style="text-align: center">cool</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">true</td>
+      <td style="text-align: center">yes</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sunny</td>
+      <td style="text-align: center">mild</td>
+      <td style="text-align: center">high</td>
+      <td style="text-align: center">false</td>
+      <td style="text-align: center">no</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sunny</td>
+      <td style="text-align: center">cool</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">false</td>
+      <td style="text-align: center">yes</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">rain</td>
+      <td style="text-align: center">mild</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">false</td>
+      <td style="text-align: center">yes</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sunny</td>
+      <td style="text-align: center">mild</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">true</td>
+      <td style="text-align: center">yes</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">overcast</td>
+      <td style="text-align: center">mild</td>
+      <td style="text-align: center">high</td>
+      <td style="text-align: center">true</td>
+      <td style="text-align: center">yes</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">overcast</td>
+      <td style="text-align: center">hot</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">false</td>
+      <td style="text-align: center">yes</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">rain</td>
+      <td style="text-align: center">mild</td>
+      <td style="text-align: center">high</td>
+      <td style="text-align: center">true</td>
+      <td style="text-align: center">no</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="数据结构">数据结构</h3>
+
+<p>创建了一个类，将数据结构都放在了类里，同时定义了一些方法来处理数据。（题外话：在类的定义过程中，我发现了python很多有意思的地方。有些可以称作优点，有些也可以看出python的缺点。这些内容我会放在一篇新的文章中说。）</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deepNum</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">attribute</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">classify</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">childNode</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">deepNum</span> <span class="o">=</span> <span class="n">deepNum</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">attribute</span> <span class="o">=</span> <span class="n">attribute</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">classify</span> <span class="o">=</span> <span class="n">classify</span>
+		<span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+
+		<span class="k">if</span> <span class="n">childNode</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">childNode</span> <span class="o">=</span> <span class="p">{}</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">childNode</span> <span class="o">=</span> <span class="n">childNode</span>
+
+	<span class="k">def</span> <span class="nf">changeDeepNum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deepNum</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">deepNum</span> <span class="o">=</span> <span class="n">deepNum</span>
+
+	<span class="k">def</span> <span class="nf">changeData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+
+	<span class="k">def</span> <span class="nf">changeAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">attribute</span> <span class="o">=</span> <span class="n">attribute</span>
+
+	<span class="k">def</span> <span class="nf">changeClassify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classify</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">classify</span> <span class="o">=</span> <span class="n">classify</span>
+
+	<span class="k">def</span> <span class="nf">changeNextNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nextNode</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">nextNode</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">childNode</span> <span class="o">=</span> <span class="p">{}</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">childNode</span> <span class="o">=</span> <span class="n">nextNode</span>
+
+	<span class="k">def</span> <span class="nf">addNextNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nextNode</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">nextNode</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">childNode</span> <span class="o">=</span> <span class="p">{}</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">childNode</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">nextNode</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">printAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deepNum</span><span class="p">)</span> <span class="o">+</span> <span class="s">': attribute = '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attribute</span><span class="p">)</span> <span class="o">+</span> <span class="s">'; classify = '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classify</span><span class="p">)</span> <span class="o">+</span> <span class="s">'; childNode = '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">childNode</span><span class="p">))</span></code></pre></figure>
+
+<h3 id="id3算法部分">ID3算法部分</h3>
+
+<p>ID3算法主要分为3个部分，也可以说为4个部分。3个部分是“同一类别的标记为叶结点”、“属性集空或样本的属性值相同标记为叶结点”，“根据属性得到的子集创建分支结点”。第3个部分中有一步至关重要，也是ID3算法的核心，就是选择最优划分属性。</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">id3</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+	<span class="kn">import</span> <span class="nn">myClass</span>
+
+	<span class="n">node</span> <span class="o">=</span> <span class="n">myClass</span><span class="o">.</span><span class="n">Node</span><span class="p">()</span>
+	<span class="n">node</span><span class="o">.</span><span class="n">changeData</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+	<span class="n">deepNum</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+	<span class="n">node</span><span class="o">.</span><span class="n">changeDeepNum</span><span class="p">(</span><span class="n">deepNum</span><span class="p">)</span>
+
+	<span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="k">for</span> <span class="n">eachData</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+		<span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eachData</span><span class="p">[</span><span class="s">'classify'</span><span class="p">])</span>
+
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+
+		<span class="n">node</span><span class="o">.</span><span class="n">changeClassify</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+		<span class="k">return</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">list</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span> <span class="o">|</span> <span class="n">dataIsSameInAttr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+
+		<span class="n">node</span><span class="o">.</span><span class="n">changeClassify</span><span class="p">(</span><span class="n">mostClassifyInData</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+		<span class="k">return</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+	<span class="n">bestAttr</span> <span class="o">=</span> <span class="n">findMaxGain</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+	<span class="n">node</span><span class="o">.</span><span class="n">changeAttribute</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">bestAttr</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+
+	<span class="k">for</span> <span class="n">eachValueInBestAttr</span> <span class="ow">in</span> <span class="n">bestAttr</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">bestAttr</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]]:</span>
+		<span class="n">dataV</span> <span class="o">=</span> <span class="n">getDataV</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bestAttr</span><span class="p">,</span> <span class="n">eachValueInBestAttr</span><span class="p">)</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">dataV</span><span class="p">:</span>
+			<span class="n">nextNode</span> <span class="o">=</span> <span class="n">myClass</span><span class="o">.</span><span class="n">Node</span><span class="p">()</span>
+			<span class="n">nextNode</span><span class="o">.</span><span class="n">changeClassify</span><span class="p">(</span><span class="n">mostClassifyInData</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+			<span class="n">nextNode</span><span class="o">.</span><span class="n">changeDeepNum</span><span class="p">(</span><span class="n">deepNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+			<span class="n">node</span><span class="o">.</span><span class="n">addNextNode</span><span class="p">({</span><span class="n">eachValueInBestAttr</span><span class="p">:</span> <span class="n">nextNode</span><span class="p">})</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">attrCopy</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+			<span class="n">attrCopy</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">bestAttr</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+			<span class="n">node</span><span class="o">.</span><span class="n">addNextNode</span><span class="p">({</span><span class="n">eachValueInBestAttr</span><span class="p">:</span> <span class="n">id3</span><span class="p">(</span><span class="n">dataV</span><span class="p">,</span> <span class="n">attrCopy</span><span class="p">)})</span>
+	<span class="k">return</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">dataIsSameInAttr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+	<span class="n">dataAttrValue</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="k">for</span> <span class="n">eachData</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+		<span class="n">temp</span> <span class="o">=</span> <span class="p">{}</span>
+		<span class="k">for</span> <span class="n">eachAttrKey</span> <span class="ow">in</span> <span class="n">attr</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+			<span class="n">temp</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">eachAttrKey</span><span class="p">:</span> <span class="n">eachData</span><span class="p">[</span><span class="s">'attrValue'</span><span class="p">][</span><span class="n">eachAttrKey</span><span class="p">]})</span>
+		<span class="n">dataAttrValue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">eachdataAttrValue</span> <span class="ow">in</span> <span class="n">dataAttrValue</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">eachdataAttrValue</span> <span class="o">==</span> <span class="n">dataAttrValue</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+			<span class="k">pass</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+	<span class="k">return</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">mostClassifyInData</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+	<span class="n">mostClassify</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="kn">import</span> <span class="nn">collections</span>
+	<span class="n">countData</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">([</span><span class="n">each_data</span><span class="p">[</span><span class="s">'classify'</span><span class="p">]</span> <span class="k">for</span> <span class="n">each_data</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]))</span>
+	<span class="n">mostClassifyNum</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">countData</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+	<span class="k">for</span> <span class="n">eachCountData</span> <span class="ow">in</span> <span class="n">countData</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">countData</span><span class="p">[</span><span class="n">eachCountData</span><span class="p">]</span> <span class="o">==</span> <span class="n">mostClassifyNum</span><span class="p">:</span>
+			<span class="n">mostClassify</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eachCountData</span><span class="p">)</span>
+	<span class="k">return</span><span class="p">(</span><span class="n">mostClassify</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">getDataV</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bestAttr</span><span class="p">,</span> <span class="n">attrValue</span><span class="p">):</span>
+	<span class="n">dataV</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="k">for</span> <span class="n">eachData</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">eachData</span><span class="p">[</span><span class="s">'attrValue'</span><span class="p">][</span><span class="nb">list</span><span class="p">(</span><span class="n">bestAttr</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">==</span> <span class="n">attrValue</span><span class="p">:</span>
+			<span class="n">dataV</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eachData</span><span class="p">)</span>
+	<span class="k">return</span><span class="p">(</span><span class="n">dataV</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">findMaxGain</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+	<span class="n">temp</span> <span class="o">=</span> <span class="n">gain</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+	<span class="n">tempValues</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+	<span class="k">for</span> <span class="n">tempKey</span> <span class="ow">in</span> <span class="n">temp</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+		<span class="k">if</span> <span class="n">temp</span><span class="p">[</span><span class="n">tempKey</span><span class="p">]</span> <span class="o">==</span> <span class="nb">max</span><span class="p">(</span><span class="n">tempValues</span><span class="p">):</span>
+			<span class="k">return</span><span class="p">({</span><span class="n">tempKey</span><span class="p">:</span> <span class="n">attr</span><span class="p">[</span><span class="n">tempKey</span><span class="p">]})</span>
+
+<span class="k">def</span> <span class="nf">gain</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+	<span class="n">temp</span> <span class="o">=</span> <span class="p">{}</span>
+	<span class="k">for</span> <span class="n">eachAttrKey</span> <span class="ow">in</span> <span class="n">attr</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+		<span class="nb">sum</span> <span class="o">=</span> <span class="n">entropy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">eachAttrValue</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">[</span><span class="n">eachAttrKey</span><span class="p">]:</span>
+			<span class="n">dataV</span> <span class="o">=</span> <span class="n">getDataV</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">{</span><span class="n">eachAttrKey</span> <span class="p">:</span><span class="n">attr</span><span class="p">[</span><span class="n">eachAttrKey</span><span class="p">]},</span> <span class="n">eachAttrValue</span><span class="p">)</span>
+			<span class="nb">sum</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataV</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="n">entropy</span><span class="p">(</span><span class="n">dataV</span><span class="p">)</span>
+		<span class="n">temp</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">eachAttrKey</span><span class="p">:</span> <span class="nb">sum</span><span class="p">})</span>
+	<span class="k">return</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+	<span class="kn">import</span> <span class="nn">math</span>
+	<span class="kn">import</span> <span class="nn">collections</span>
+	<span class="n">countData</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">([</span><span class="n">each_data</span><span class="p">[</span><span class="s">'classify'</span><span class="p">]</span> <span class="k">for</span> <span class="n">each_data</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]))</span>
+	<span class="n">ent</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="k">for</span> <span class="n">countDataKey</span> <span class="ow">in</span> <span class="n">countData</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+		<span class="n">ent</span> <span class="o">-=</span> <span class="n">countData</span><span class="p">[</span><span class="n">countDataKey</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">countData</span><span class="p">[</span><span class="n">countDataKey</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+	<span class="k">return</span><span class="p">(</span><span class="n">ent</span><span class="p">)</span></code></pre></figure>
+
+<h3 id="树的表达">树的表达</h3>
+
+<p>最终，我使用了2种方法来呈现树的结构。第一种方法，将每个结点打印出来，结构如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0: attribute = outlook; classify = None; childNode = {'overcast': &lt;myClass.Node object at 0x1021ecba8&gt;, 'rain': &lt;myClass.Node object at 0x1021ecb70&gt;, 'sunny': &lt;myClass.Node object at 0x104754208&gt;}
+1: attribute = None; classify = yes; childNode = {}
+1: attribute = windy; classify = None; childNode = {'false': &lt;myClass.Node object at 0x104754240&gt;, 'true': &lt;myClass.Node object at 0x104754278&gt;}
+2: attribute = None; classify = yes; childNode = {}
+2: attribute = None; classify = no; childNode = {}
+1: attribute = humidity; classify = None; childNode = {'normal': &lt;myClass.Node object at 0x104754320&gt;, 'high': &lt;myClass.Node object at 0x104754358&gt;}
+2: attribute = None; classify = yes; childNode = {}
+2: attribute = None; classify = no; childNode = {}
+</code></pre>
+</div>
+
+<p>其中，第1个数字表示该结点所在树的层数（自上向下计算），0表示根结点。</p>
+
+<p>第二种方法，就是使用python的matplotlib库画图。使用matplotlib画图的过程非常曲折，画出来的效果也差强人意：</p>
+
+<p><img src="http://localhost:4000/image/Machine_Learning/ID3_Tree.png" /></p>
+
+<p>下载完整程序： <a href="http://localhost:4000/download/ID3.zip">ID3算法源码</a></p>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/ML-Decision-Tree/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+        </article>
+		</div>
+		</div>
+	</body>
+</html>
