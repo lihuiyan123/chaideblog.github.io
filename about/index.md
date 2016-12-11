@@ -24,4 +24,4 @@ weibo：[不要叫朕起床Orz](http://weibo.com/p/1005052330502705/home?from=pa
 
 邮箱：uhznow@163.com
 
-GitHub：[https://github.com/chaideblog](https://github.com/chaideblog)
+GitHub：<a href="https://github.com/chaideblog" target="_blank">https://github.com/chaideblog</a>

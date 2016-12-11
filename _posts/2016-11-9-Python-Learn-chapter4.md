@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Python学习手册 笔记（第四章）"
+title:  Python学习手册 笔记（第四章）
 categories: Python
 tags: Python学习手册
 excerpt: python程序可以分解成模块、语句、表达式以及对象。

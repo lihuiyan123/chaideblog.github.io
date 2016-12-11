@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Python学习手册 笔记（第六章）"
+title:  Python学习手册 笔记（第六章）
 categories: Python
 tags: Python学习手册
 excerpt: python的核心是动态。

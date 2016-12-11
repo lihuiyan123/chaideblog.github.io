@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Python需要注意的一些问题"
-categories: "Python"
-tags: "References"
+title:  Python需要注意的一些问题
+categories: Python
+tags: References
 excerpt: Beautiful is better than ugly.
 ---
 

@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "决策树——ID3算法"
-categories: "Machine&#160Learning"
-tags: "Decision&#160Tree"
+title:  决策树——ID3算法
+categories: Machine&nbsp;Learning
+tags: Decision&nbsp;Tree
 excerpt: ID3算法通过信息熵来选择最佳的测试属性。
 ---
 

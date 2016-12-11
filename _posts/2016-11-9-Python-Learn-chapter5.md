@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Python学习手册 笔记（第五章）"
+title:  Python学习手册 笔记（第五章）
 categories: Python
 tags: Python学习手册
 excerpt: 多进制数、小数、分数和集合。

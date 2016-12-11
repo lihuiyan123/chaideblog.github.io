@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Python学习手册 笔记（第七章）"
+title:  Python学习手册 笔记（第七章）
 categories: Python
 tags: Python学习手册
 excerpt: python字符串的三种表示方法。

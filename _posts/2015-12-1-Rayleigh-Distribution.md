@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "瑞利分布"
+title:  瑞利分布
 categories: 概率论
-tags: "Fundamental"
+tags: Fundamental
 excerpt: 当一个随机二维向量的两个分量呈独立的、有着相同的方差的正态分布时，这个向量的模呈瑞利分布。
 ---
 

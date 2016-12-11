@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Python学习手册 笔记（第八章）"
+title:  Python学习手册 笔记（第八章）
 categories: Python
 tags: Python学习手册
 excerpt: python中的列表和字典。

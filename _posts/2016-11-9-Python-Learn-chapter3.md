@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Python学习手册 笔记（第三章）"
+title:  Python学习手册 笔记（第三章）
 categories: Python
 tags: Python学习手册
 excerpt: python是一门脚本语言，文件被称为模块，模块是变量名的封装，被认为是命名空间。

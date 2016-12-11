@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Python学习手册 笔记（第九章）"
+title:  Python学习手册 笔记（第九章）
 categories: Python
 tags: Python学习手册
 excerpt: python中的元组和文件。
