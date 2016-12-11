@@ -24,4 +24,4 @@ weibo：[不要叫朕起床Orz](http://weibo.com/p/1005052330502705/home?from=pa
 
 邮箱：uhznow@163.com
 
-GitHub：[http://github.com/Augustrain](http://github.com/Augustrain)
+GitHub：[https://github.com/chaideblog](https://github.com/chaideblog)

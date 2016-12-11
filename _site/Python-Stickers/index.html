@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+	<head>
+		<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="author" content="CHAI" />
+		<title>
+			
+				
+				Python需要注意的一些问题
+			
+		</title>
+
+		<link rel="shortcut icon" href="/image/favicon.ico" />
+		<link href="/feed/" rel="alternate" title="CHAI" type="application/atom+xml" />
+		<link rel="stylesheet" href="/media/css/style.css" />
+		<link rel="stylesheet" href="/media/css/highlight.css" />
+		<script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+	</head>
+
+	<body>
+		<div id="container">
+		<div id="main" role="main">
+
+		<header>
+			<h1>
+				Python需要注意的一些问题
+			</h1>
+		</header>
+
+		<nav>
+			<span><a title="网站首页" class="" href="/">首页</a></span>
+			<span><a title="文章分类" class="" href="/categories/">分类</a></span>
+			<span><a title="标签索引" class="" href="/tags/">标签</a></span>
+			<span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+			<span><a title="关于站长" class="" href="/about/">关于</a></span>
+        </nav>
+
+        <article class="content">
+			<section class="meta">
+<span class="time">
+    <time datetime="2016-12-11">2016-12-11</time>
+</span>
+
+ |
+<span class="categories">
+  分类
+  
+  <a href="/categories/#Python" title="Python">Python</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  标签
+  
+  <a href="/tags/#References" title="References">References</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="引用是门大学问">“引用”是门大学问</h2>
+
+<p>Python中需要特别注意引用的问题。由于Python中变量只是对对象的一个引用，而多个变量可以引用同一个对象。这就会造成一些问题，举个简单的例子：</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">A</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"A = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s">"; B = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>
+<span class="n">A</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"A = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s">"; B = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">B</span><span class="p">))</span></code></pre></figure>
+
+<p>输出的结果：
+<img src="http://localhost:4000/image/Python/References_Example1-1.png" /></p>
+
+<p>例子中，A和B都是对对象“[1, 2, 3]”的一个引用，可以理解为A和B是两个指向“[1, 2, 3]”的指针，事实上Python也是这么实现的。当修改了A的值，实际上是修改了A指向的对象的值，所以B的值也发生了变化。我们可以再进行一个尝试，可以发现A和B实际是同一个对象。</p>
+
+<p><img src="http://localhost:4000/image/Python/References_Example1-2.png" /></p>
+
+<p>但是，当你给A赋予一个新的对象，之前的对象的空间会被回收（如果没有被其他变量名或对象引用），称为垃圾回收。此外，大的对象可以连接到其他对象，比如列表、字典等。所以，如果你更改列表中的一个变量时，需要小心了。</p>
+
+<h2 id="函数默认值是可变对象时">函数默认值是可变对象时</h2>
+
+<p>上一部分的内容是为这一部分的内容做铺垫。在实现ID3算法时，我发现了一个问题：当函数默认值是可变对象时，对函数多次调用，可是变量都指向了同一个对象。举个例子：</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">myclass</span> <span class="kn">import</span> <span class="n">node</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">node</span><span class="p">()</span>
+<span class="n">a</span><span class="o">.</span><span class="n">addValue</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">printNode</span><span class="p">()</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">node</span><span class="p">()</span>
+<span class="n">b</span><span class="o">.</span><span class="n">addValue</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">printNode</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"a is b = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"a == b = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"a.node is b.node = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">node</span> <span class="ow">is</span> <span class="n">b</span><span class="o">.</span><span class="n">node</span><span class="p">))</span></code></pre></figure>
+
+<p>其中，myclass文件如下：</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">node</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span> <span class="o">=</span> <span class="p">[]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="n">node</span>
+
+    <span class="k">def</span> <span class="nf">addValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">printNode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">)</span></code></pre></figure>
+
+<p>结果显示：</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">a</span> <span class="ow">is</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">a</span> <span class="o">==</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">a</span><span class="o">.</span><span class="n">node</span> <span class="ow">is</span> <span class="n">b</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="bp">True</span></code></pre></figure>
+
+<p>针对这个问题，我找到了两种方法解决：</p>
+
+<ol>
+  <li>不改变class，使用copy库：</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">myclass</span> <span class="kn">import</span> <span class="n">node</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">node</span><span class="p">())</span>
+<span class="n">a</span><span class="o">.</span><span class="n">addValue</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">printNode</span><span class="p">()</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">node</span><span class="p">())</span>
+<span class="n">b</span><span class="o">.</span><span class="n">addValue</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">printNode</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"a is b = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"a == b = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"a.node is b.node = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">node</span> <span class="ow">is</span> <span class="n">b</span><span class="o">.</span><span class="n">node</span><span class="p">))</span></code></pre></figure>
+
+<p>结果显示：</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">a</span> <span class="ow">is</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">a</span> <span class="o">==</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">a</span><span class="o">.</span><span class="n">node</span> <span class="ow">is</span> <span class="n">b</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="bp">False</span></code></pre></figure>
+
+<p>注意，不要使用浅复制(copy)，浅复制实际还是对对象的引用（浅复制和深复制的区别）。问题虽然得到了解决，但是这种方法显然不漂亮。</p>
+
+<ol>
+  <li>不使用可变变量作为函数默认值</li>
+</ol>
+
+<p>将class文件修改成如下：</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">node</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">addValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">printNode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">)</span></code></pre></figure>
+
+<p>同时，将主文件恢复成原先的样子：</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">myclass</span> <span class="kn">import</span> <span class="n">node</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">node</span><span class="p">()</span>
+<span class="n">a</span><span class="o">.</span><span class="n">addValue</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">printNode</span><span class="p">()</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">node</span><span class="p">()</span>
+<span class="n">b</span><span class="o">.</span><span class="n">addValue</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">printNode</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"a is b = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"a == b = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"a.node is b.node = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">node</span> <span class="ow">is</span> <span class="n">b</span><span class="o">.</span><span class="n">node</span><span class="p">))</span></code></pre></figure>
+
+<p>可以看到结果如下：</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">a</span> <span class="ow">is</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">a</span> <span class="o">==</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">a</span><span class="o">.</span><span class="n">node</span> <span class="ow">is</span> <span class="n">b</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="bp">False</span></code></pre></figure>
+
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/Decision-Tree-ID3/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+        </article>
+		</div>
+		</div>
+	</body>
+</html>
