@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
 	<head>
+
+
+
+
+
 		<script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+			src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="author" content="CHAI" />
 		<title>
@@ -39,9 +44,54 @@
         </nav>
 
         <article class="content">
-			<p>来了，就留下你的足迹吧。</p>
+			<script type="text/javascript" src="../media/js/jquery-1.9.1.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../media/css/board.css" />
+
+<script type="text/javascript">
+	$(function(){
+		show();
+		function show(){
+			$.ajax({
+				type: 'post',
+				url: 'http://123.207.151.118/leftboard/show.php',
+				cache: false,
+				success: function(data){
+					$("#show_area").html(data);
+				},
+				error: function(){
+					alert(data);
+				}
+			})
+		}
+		$("#submit").click(function(){
+			var text = $("#textarea")[0].value;
+			$.ajax({
+				type: 'post',
+				url: 'http://123.207.151.118/leftboard/board.php',
+				data: { text : text },
+				cache: false,
+				success: function(data){
+					show();
+					$("#textarea").val("");
+				},
+				error: function(){
+					alert("wrong");
+				}
+			})
+		})
+	})
+</script>
+
+<div class="left_board">
+<div class="show_area" id="show_area"></div>
+<textarea class="textarea" id="textarea"></textarea>
+<button class="submit" id="submit">submit</button>
+</div>
+
 
         </article>
+
 		</div>
 		</div>
 	</body>

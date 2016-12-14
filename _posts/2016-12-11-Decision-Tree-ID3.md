@@ -205,6 +205,6 @@ def entropy(data):
 
 第二种方法，就是使用python的matplotlib库画图。使用matplotlib画图的过程非常曲折，画出来的效果也差强人意：
 
-<img src="{{ site.url }}/image/Machine_Learning/ID3_Tree.png">
+<img src="{{ site.url }}/image/Machine_Learning/Decision_Tree_ID3_1.png">
 
 下载完整程序： [ID3算法源码]({{ site.url }}/download/ID3.zip)
