@@ -145,6 +145,221 @@
 
 <p><img src="http://localhost:4000/image/Machine_Learning/Decision_Tree_CART_1.png" /></p>
 
+<p>下面介绍CART分类树的算法：</p>
+
+<p>输入：训练数据集D
+输出：CART决策树</p>
+
+<ol>
+  <li>根据训练数据集D，计算现有的特征对该数据集的gini系数。对于每一个特征A，取该特征的<strong>某一个</strong>值a，根据特征A的值是否为a，将D分割成<script type="math/tex">D_{True}</script>和<script type="math/tex">D_{False}</script>两个部分，并计算A=a是的分割gini系数</li>
+  <li>在所有可能选择的特征A和所有可能的切分点a中，选择基尼系数最小的特征及其切分点作为最优特征和最优切分点。并生成两个子结点，将<script type="math/tex">D_{True}</script>和<script type="math/tex">D_{False}</script>分配给两个子结点。</li>
+  <li>对子结点递归调用1和2步，直到满足停止条件</li>
+</ol>
+
+<p>本文使用和ID3算法相似的停止条件，即D中样本全属于同一类别C或A=∅ OR D中样本在A上取值相同。除了本文的停止方式之外，还可以：(1)计算结点中的样本个数小于某个设定的阈值时，停止；(2)决策树高度达到用户设定的值时，停止；(3)当不纯度函数的变化小于某个规定的阈值，停止</p>
+
+<p>我有一个感受，CART的关键点不在于gini系数，gini系数只是用来衡量训练集不纯度的一个度量手段，我们完全可以使用ID3算法中的<strong>熵不纯度</strong>替换CART中的<strong>Gini不纯度</strong>。CART的关键在于提出了一种处理连续数据的回归树方法。</p>
+
+<p>CART分类树的一个例子：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">名称</th>
+      <th style="text-align: center">体温</th>
+      <th style="text-align: center">表面覆盖</th>
+      <th style="text-align: center">胎生</th>
+      <th style="text-align: center">产蛋</th>
+      <th style="text-align: center">能飞</th>
+      <th style="text-align: center">水生</th>
+      <th style="text-align: center">有腿</th>
+      <th style="text-align: center">冬眠</th>
+      <th style="text-align: center">类标记</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">人</td>
+      <td style="text-align: center">恒温</td>
+      <td style="text-align: center">毛发</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">哺乳类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">巨蟒</td>
+      <td style="text-align: center">冷血</td>
+      <td style="text-align: center">鳞片</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">爬行类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">鲑鱼</td>
+      <td style="text-align: center">冷血</td>
+      <td style="text-align: center">鳞片</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">鱼类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">鲸</td>
+      <td style="text-align: center">恒温</td>
+      <td style="text-align: center">毛发</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">哺乳类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">蛙</td>
+      <td style="text-align: center">冷血</td>
+      <td style="text-align: center">无</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">有时</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">两栖类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">巨蜥</td>
+      <td style="text-align: center">冷血</td>
+      <td style="text-align: center">鳞片</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">爬行类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">蝙蝠</td>
+      <td style="text-align: center">恒温</td>
+      <td style="text-align: center">毛发</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">哺乳类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">猫</td>
+      <td style="text-align: center">恒温</td>
+      <td style="text-align: center">皮</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">哺乳类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">豹纹鲨</td>
+      <td style="text-align: center">冷血</td>
+      <td style="text-align: center">鳞片</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">鱼类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">海龟</td>
+      <td style="text-align: center">冷血</td>
+      <td style="text-align: center">鳞片</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">有时</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">爬行类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">豪猪</td>
+      <td style="text-align: center">恒温</td>
+      <td style="text-align: center">刚毛</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">哺乳类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">鳗</td>
+      <td style="text-align: center">冷血</td>
+      <td style="text-align: center">鳞片</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">鱼类</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">蝾螈</td>
+      <td style="text-align: center">冷血</td>
+      <td style="text-align: center">无</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">否</td>
+      <td style="text-align: center">有时</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">是</td>
+      <td style="text-align: center">两栖类</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>CART分类树的结果为：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="http://localhost:4000/image/Machine_Learning/Decision_Tree_CART_2.png" /></th>
+      <th style="text-align: center"><img src="http://localhost:4000/image/Machine_Learning/Decision_Tree_CART_3.png" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">结果1</td>
+      <td style="text-align: center">结果2</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>同时，我们我使用之前的ID3算法对同一个训练集进行训练，产生的结果如下：</p>
+
+<p><img src="http://localhost:4000/image/Machine_Learning/Decision_Tree_CART_4.png" /></p>
+
+<p>由此，我们可以发现ID3算法和CART算法的不同之处。</p>
+
 </section>
 <section align="right">
 <br/>
