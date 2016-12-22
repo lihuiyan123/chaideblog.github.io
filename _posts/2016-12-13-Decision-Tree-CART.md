@@ -120,4 +120,10 @@ CART分类树的结果为：
 
 <img src="{{ site.url }}/image/Machine_Learning/Decision_Tree_CART_4.png">
 
-由此，我们可以发现ID3算法和CART算法的不同之处。
+由此，我们可以发现ID3算法和CART算法的不同之处。(CART代码在本页最后提供下载)
+
+
+
+
+
+下载完整程序： [CART算法（未剪枝）源码]({{ site.url }}/download/CART_without_cut.zip)
